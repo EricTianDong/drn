@@ -3,12 +3,12 @@ from typing import Optional, Union
 import numpy as np
 import torch
 import torch.nn as nn
-
+import lightning as L
 import statsmodels.api as sm
 from statsmodels.genmod.families import Gaussian, Gamma
 
 
-class GLM(nn.Module):
+class GLM(L.LightningModule):
     """
     A base PyTorch model representing a generalized linear model.
     This class is extended by specific distribution types like Gamma or Gaussian.
@@ -20,14 +20,43 @@ class GLM(nn.Module):
             p: the number of features in the model
             distribution: the type of GLM ('gamma' or 'gaussian')
         """
-        if not distribution in ("gamma", "gaussian"):
+    def __init__(self, p: int, distribution: str, learning_rate: float = 1e-3):
+        super(GLM, self).__init__()
+
+        if distribution not in ("gamma", "gaussian"):
             raise ValueError(f"Unsupported model type: {distribution}")
 
-        super(GLM, self).__init__()
         self.p = p
         self.distribution = distribution
+        self.learning_rate = learning_rate
+
         self.linear = nn.Linear(p, 1)
         self.dispersion = nn.Parameter(torch.tensor(torch.nan), requires_grad=False)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        if self.distribution == "gamma":
+            out = torch.exp(self.linear(x)).squeeze(-1)
+        else:
+            out = self.linear(x).squeeze(-1)
+
+        assert out.shape == torch.Size([x.shape[0]])
+        return out
+
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self.forward(x)
+        loss = gamma_deviance_loss(y_hat, y) if self.distribution == "gamma" else gaussian_deviance_loss(y_hat, y)
+        self.log("train_loss", loss, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self.forward(x)
+        val_loss = gamma_deviance_loss(y_hat, y) if self.distribution == "gamma" else gaussian_deviance_loss(y_hat, y)
+        self.log("val_loss", val_loss, prog_bar=True)
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
     @staticmethod
     def from_statsmodels(
@@ -88,14 +117,6 @@ class GLM(nn.Module):
 
         return torch_glm
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        if self.distribution == "gamma":
-            out = torch.exp(self.linear(x)).squeeze(-1)
-        else:
-            out = self.linear(x).squeeze(-1)
-
-        assert out.shape == torch.Size([x.shape[0]])
-        return out
 
     def clone(self) -> "GLM":
         """

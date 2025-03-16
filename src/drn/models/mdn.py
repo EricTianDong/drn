@@ -3,11 +3,12 @@ from typing import List, Union
 import numpy as np
 import torch
 import torch.nn as nn
+import lightning as L
 from torch.distributions import Categorical
 from torch.distributions.mixture_same_family import MixtureSameFamily
 
 
-class MDN(nn.Module):
+class MDN(L.LightningModule):
     """
     Mixture density network that can switch between gamma and Gaussian distribution components.
     The distributional forecasts are mixtures of `num_components` specified distributions.
@@ -21,6 +22,7 @@ class MDN(nn.Module):
         hidden_size=100,
         dropout_rate=0.2,
         distribution="gamma",
+        learning_rate = 1e-3,
     ):
         """
         Args:
@@ -34,6 +36,7 @@ class MDN(nn.Module):
         self.p = p
         self.num_components = num_components
         self.distribution = distribution
+        self.learning_rate = learning_rate
 
         layers = [nn.Linear(p, hidden_size), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
         for _ in range(num_hidden_layers - 1):
@@ -74,6 +77,27 @@ class MDN(nn.Module):
             mus = self.mu(x)
             sigmas = nn.Softplus()(self.pre_sigma(x))  # Ensure sigma is positive
             return [weights, mus, sigmas]
+
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        output = self.forward(x)
+
+        loss_fn = gamma_mdn_loss if self.distribution == "gamma" else gaussian_mdn_loss
+        loss = loss_fn(output, y)
+
+        self.log("train_loss", loss, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        output = self.forward(x)
+
+        loss_fn = gamma_mdn_loss if self.distribution == "gamma" else gaussian_mdn_loss
+        val_loss = loss_fn(output, y)
+        self.log("val_loss", val_loss, prog_bar=True)
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
     def distributions(self, x: torch.Tensor) -> MixtureSameFamily:
         """

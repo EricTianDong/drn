@@ -2,7 +2,7 @@ import numpy as np
 import torch
 
 
-def generate_synthetic_data(n=1000, seed=1):
+def generate_synthetic_data(n=1000, seed=1) -> tuple[torch.Tensor, torch.Tensor, torch.utils.data.TensorDataset, torch.utils.data.TensorDataset]:
     rng = np.random.default_rng(seed)
     x_all = rng.random(size=(n, 4))
     epsilon = rng.normal(0, 0.2, n)
@@ -48,4 +48,12 @@ def generate_synthetic_data(n=1000, seed=1):
     train_dataset = torch.utils.data.TensorDataset(X_train, Y_train)
     val_dataset = torch.utils.data.TensorDataset(X_val, Y_val)
 
-    return X_train, Y_train, train_dataset, val_dataset
+    # Create DataLoader objects for training and validation
+
+    train_loader = torch.utils.data.DataLoader(
+        train_dataset, batch_size=128, shuffle=True
+    )
+    val_loader = torch.utils.data.DataLoader(
+        val_dataset, batch_size=128, shuffle=False)
+
+    return X_train, Y_train, train_loader, val_loader
