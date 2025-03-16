@@ -3,11 +3,12 @@ from typing import Optional, Union
 import numpy as np
 import torch
 import torch.nn as nn
+import lightning as L
 
-from .glm import GLM, gamma_convert_parameters, estimate_dispersion
+from .glm import GLM, gamma_convert_parameters, estimate_dispersion, gamma_deviance_loss, gaussian_deviance_loss
 
 
-class CANN(nn.Module):
+class CANN(L.LightningModule):
     """
     The Combined Actuarial Neural Network (CANN) model adaptable for both gamma and Gaussian GLMs.
     """
@@ -19,6 +20,7 @@ class CANN(nn.Module):
         hidden_size=50,
         dropout_rate=0.2,
         train_glm=False,
+        learning_rate=1e-3,
     ):
         """
         Args:
@@ -36,6 +38,7 @@ class CANN(nn.Module):
         self.glm = glm.clone()
         self.train_glm = train_glm
         self.distribution = glm.distribution
+        self.learning_rate = learning_rate
         self.dispersion = nn.Parameter(torch.tensor(torch.nan), requires_grad=False)
 
         layers = [
@@ -53,6 +56,10 @@ class CANN(nn.Module):
         layers.append(nn.Linear(hidden_size, 1))
         self.nn_output_layer = nn.Sequential(*layers)
 
+        if not self.train_glm:
+            for param in self.glm.parameters():
+                param.requires_grad = False
+
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Calculate the predicted outputs for the distributions.
@@ -69,6 +76,22 @@ class CANN(nn.Module):
         out = out.squeeze(-1)
         assert out.shape == torch.Size([x.shape[0]])
         return out
+    
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self.forward(x)
+        loss = gamma_deviance_loss(y_hat, y) if self.distribution == "gamma" else gaussian_deviance_loss(y_hat, y)
+        self.log("train_loss", loss, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self.forward(x)
+        val_loss = gamma_deviance_loss(y_hat, y) if self.distribution == "gamma" else gaussian_deviance_loss(y_hat, y)
+        self.log("val_loss", val_loss, prog_bar=True)
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=1e-3)
 
     def distributions(
         self, x: torch.Tensor

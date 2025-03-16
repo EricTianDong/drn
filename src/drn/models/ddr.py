@@ -1,13 +1,14 @@
 import numpy as np
 import torch
 import torch.nn as nn
+import lightning as L
 
 from ..distributions.histogram import Histogram
 
 
-class DDR(nn.Module):
+class DDR(L.LightningModule):
     def __init__(
-        self, p: int, cutpoints, num_hidden_layers=2, hidden_size=100, dropout_rate=0.2
+        self, p: int, cutpoints, num_hidden_layers=2, hidden_size=100, dropout_rate=0.2, learning_rate=1e-3, loss_fn="jbce",
     ):
         """
         Args:
@@ -19,6 +20,8 @@ class DDR(nn.Module):
         super(DDR, self).__init__()
         self.cutpoints = nn.Parameter(torch.Tensor(cutpoints), requires_grad=False)
         self.p = p
+        self.learning_rate = learning_rate
+        self.loss_fn = loss_fn
 
         layers = [
             nn.Linear(self.p, hidden_size),
@@ -50,7 +53,35 @@ class DDR(nn.Module):
         # Calculate probabilities using the final layer
         probs = torch.softmax(self.pi(h), dim=1)
 
-        return self.cutpoints, probs
+        return probs
+
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        probs = self.forward(x)
+        dists = Histogram(self.cutpoints, probs)
+
+        if self.loss_fn == "jbce":
+            loss = jbce_loss(dists, y)
+        else:
+            loss = nll_loss(dists, y)
+
+        self.log("train_loss", loss, prog_bar=True)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        probs = self.forward(x)
+        dists = Histogram(self.cutpoints, probs)
+
+        if self.loss_fn == "jbce":
+            val_loss = jbce_loss(dists, y)
+        else:
+            val_loss = nll_loss(dists, y)
+
+        self.log("val_loss", val_loss, prog_bar=True)
+
+    def configure_optimizers(self):
+        return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
     def distributions(self, x):
         cutpoints, prob_masses = self.forward(x)
@@ -59,7 +90,7 @@ class DDR(nn.Module):
         return dists
 
 
-def jbce_loss(dists, y, alpha=0.0):
+def jbce_loss(dists, y):
     """
     The joint binary cross entropy loss.
     Args:
@@ -92,14 +123,7 @@ def jbce_loss(dists, y, alpha=0.0):
 
     return torch.mean(losses)
 
-
-def ddr_loss(pred, y, alpha=0.0):
-    cutpoints, prob_masses = pred
-    dists = Histogram(cutpoints, prob_masses)
-    return jbce_loss(dists, y, alpha)
-
-
-def nll_loss(dists, y, alpha=0.0):
+def nll_loss(dists, y):
     losses = -(dists.log_prob(y))
     return torch.mean(losses)
 
@@ -115,5 +139,4 @@ def ddr_cutpoints(c_0: float, c_K: float, proportion: float, n: int) -> list[flo
     """
     num_cutpoints = int(np.ceil(proportion * n))
     cutpoints = list(np.linspace(c_0, c_K, num_cutpoints))
-
     return cutpoints
