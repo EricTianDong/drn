@@ -14,13 +14,12 @@ class GLM(L.LightningModule):
     This class is extended by specific distribution types like Gamma or Gaussian.
     """
 
-    def __init__(self, p: int, distribution: str):
+    def __init__(self, p: int, distribution: str, learning_rate: float = 1e-3):
         """
         Args:
             p: the number of features in the model
             distribution: the type of GLM ('gamma' or 'gaussian')
         """
-    def __init__(self, p: int, distribution: str, learning_rate: float = 1e-3):
         super(GLM, self).__init__()
 
         if distribution not in ("gamma", "gaussian"):

@@ -84,8 +84,8 @@ class DDR(L.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=self.learning_rate)
 
     def distributions(self, x):
-        cutpoints, prob_masses = self.forward(x)
-        dists = Histogram(cutpoints, prob_masses)
+        prob_masses = self.forward(x)
+        dists = Histogram(self.cutpoints, prob_masses)
         assert dists.batch_shape == torch.Size([x.shape[0]])
         return dists
 
@@ -140,3 +140,36 @@ def ddr_cutpoints(c_0: float, c_K: float, proportion: float, n: int) -> list[flo
     num_cutpoints = int(np.ceil(proportion * n))
     cutpoints = list(np.linspace(c_0, c_K, num_cutpoints))
     return cutpoints
+
+def distribution_prediction_kl_dists(ddr_model, glm_model, X, kl_direction="forwards"):
+    """
+    Compare DDR and GLM models by producing distributional predictions and calculating CDFs.
+    
+    Args:
+        ddr_model: The DDR model.
+        glm_model: The GLM model.
+        X: Batch of covariates.
+    
+    Returns:
+        A tuple of CDFs from DDR and GLM models.
+    """
+    # Get DDR model predictions
+    ddr_dists = ddr_model.distributions(X)
+    ddr_cdfs = ddr_dists.cdf_at_cutpoints()
+    ddr_probs = torch.diff(ddr_cdfs, dim=1)
+
+    # Get GLM model predictions
+    glm_dists = glm_model.distributions(X)
+    glm_cdfs = glm_dists.cdf_at_cutpoints()
+    glm_probs = torch.diff(glm_cdfs, dim=1)
+
+    # Rename the variables for clarity
+    a_i = ddr_probs / glm_probs
+    b_i = glm_probs
+
+    if kl_direction == "forwards":
+        kl = -(torch.log(a_i) * b_i)
+    else:
+        kl = torch.log(a_i) * a_i * b_i
+    
+    return torch.mean(torch.sum(kl, axis=1)) 
