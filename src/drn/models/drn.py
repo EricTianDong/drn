@@ -172,7 +172,7 @@ class DRN(L.LightningModule):
             loss = nll_loss(dists, y)
 
         if self.kl_alpha or self.mean_alpha or self.tv_alpha or self.dv_alpha:
-            loss += self.drn_regularization(dists, baseline_dists, baseline_probs)
+            loss += self.regularization(dists, baseline_dists, baseline_probs)
 
         self.log("train_loss", loss, prog_bar=True)
         return loss
