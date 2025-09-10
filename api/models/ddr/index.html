@@ -12,24 +12,28 @@
         <meta name="author" content="Eric Dong, Patrick Laub">
       
       
-        <link rel="canonical" href="https://drn-docs.readthedocs.io/getting-started/installation/">
+        <link rel="canonical" href="https://drn-docs.readthedocs.io/api/models/ddr/">
       
       
+        <link rel="prev" href="../mdn/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+        <link rel="next" href="../drn/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>Installation - DRN - Distributional Refinement Networks</title>
+        <title>DDR - drn Python Package</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#ddr-deep-distribution-regression" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +94,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="DRN - Distributional Refinement Networks" class="md-header__button md-logo" aria-label="DRN - Distributional Refinement Networks" data-md-component="logo">
+    <a href="../../.." title="drn Python Package" class="md-header__button md-logo" aria-label="drn Python Package" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -104,13 +108,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            DRN - Distributional Refinement Networks
+            drn Python Package
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation
+              DDR
             
           </span>
         </div>
@@ -226,7 +230,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -247,7 +251,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../quickstart/" class="md-tabs__link">
+        <a href="../../../getting-started/quickstart/" class="md-tabs__link">
           
   
   
@@ -263,11 +267,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../api/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -301,13 +307,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="DRN - Distributional Refinement Networks" class="md-nav__button md-logo" aria-label="DRN - Distributional Refinement Networks" data-md-component="logo">
+    <a href="../../.." title="drn Python Package" class="md-nav__button md-logo" aria-label="drn Python Package" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    DRN - Distributional Refinement Networks
+    drn Python Package
   </label>
   
     <div class="md-nav__source">
@@ -331,7 +337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -357,8 +363,6 @@
     
     
       
-      
-        
       
     
     
@@ -398,7 +402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstart/" class="md-nav__link">
+      <a href="../../../getting-started/quickstart/" class="md-nav__link">
         
   
   
@@ -421,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concepts/" class="md-nav__link">
+      <a href="../../../getting-started/concepts/" class="md-nav__link">
         
   
   
@@ -444,7 +448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../advanced-usage/" class="md-nav__link">
+      <a href="../../../getting-started/advanced-usage/" class="md-nav__link">
         
   
   
@@ -471,28 +475,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
       
         
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -505,7 +510,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -519,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -539,25 +544,23 @@
                 
   
   
+    
   
   
+  
     
     
     
     
       
       
-        
-      
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -573,7 +576,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Models
@@ -587,7 +590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -610,7 +613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/base/" class="md-nav__link">
+      <a href="../base/" class="md-nav__link">
         
   
   
@@ -633,7 +636,30 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/glm/" class="md-nav__link">
+      <a href="../constant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Constant
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glm/" class="md-nav__link">
         
   
   
@@ -656,12 +682,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/drn/" class="md-nav__link">
+      <a href="../deepglm/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    DRN
+    DeepGLM
     
   </span>
   
@@ -679,12 +705,243 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/models/others/" class="md-nav__link">
+      <a href="../cann/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Other Models
+    CANN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MDN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    DDR
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    DDR
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#class-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class Definition
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Class Definition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.DDR" class="md-nav__link">
+    <span class="md-ellipsis">
+      DDR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.DDR-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.DDR.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __init__
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.DDR.forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      forward
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loss-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loss Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loss Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jbce-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      JBCE Loss
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JBCE Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.jbce_loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      jbce_loss
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nll-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      NLL Loss
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NLL Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.nll_loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      nll_loss
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DRN
     
   </span>
   
@@ -710,7 +967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/distributions/" class="md-nav__link">
+      <a href="../../distributions/" class="md-nav__link">
         
   
   
@@ -733,7 +990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/training/" class="md-nav__link">
+      <a href="../../training/" class="md-nav__link">
         
   
   
@@ -756,7 +1013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/metrics/" class="md-nav__link">
+      <a href="../../metrics/" class="md-nav__link">
         
   
   
@@ -779,7 +1036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/interpretability/" class="md-nav__link">
+      <a href="../../interpretability/" class="md-nav__link">
         
   
   
@@ -802,7 +1059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/utils/" class="md-nav__link">
+      <a href="../../utils/" class="md-nav__link">
         
   
   
@@ -852,91 +1109,47 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#requirements" class="md-nav__link">
+  <a href="#class-definition" class="md-nav__link">
     <span class="md-ellipsis">
-      Requirements
+      Class Definition
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-from-pypi" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install from PyPI
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#install-for-development" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install for Development
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verify-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Verify Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gpu-support" class="md-nav__link">
-    <span class="md-ellipsis">
-      GPU Support
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-installation-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common Installation Issues
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Installation Issues">
+    <nav class="md-nav" aria-label="Class Definition">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#issue-module-not-found-after-installation" class="md-nav__link">
+  <a href="#drn.models.ddr.DDR" class="md-nav__link">
     <span class="md-ellipsis">
-      Issue: Module not found after installation
+      DDR
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#issue-cuda-compatibility-problems" class="md-nav__link">
+  <a href="#drn.models.ddr.DDR-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Issue: CUDA compatibility problems
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.DDR.__init__" class="md-nav__link">
+    <span class="md-ellipsis">
+      __init__
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#issue-memory-issues-during-installation" class="md-nav__link">
+  <a href="#drn.models.ddr.DDR.forward" class="md-nav__link">
     <span class="md-ellipsis">
-      Issue: Memory issues during installation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-permission-denied-on-macoslinux" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: Permission denied on macOS/Linux
+      forward
     </span>
   </a>
   
@@ -946,31 +1159,72 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#virtual-environment-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      Virtual Environment Setup
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#docker-installation" class="md-nav__link">
+  <a href="#loss-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      Docker Installation
+      Loss Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loss Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jbce-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      JBCE Loss
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JBCE Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.jbce_loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      jbce_loss
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nll-loss" class="md-nav__link">
     <span class="md-ellipsis">
-      Next Steps
+      NLL Loss
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="NLL Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.ddr.nll_loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      nll_loss
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -993,113 +1247,127 @@
   
 
 
-<h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h1>
-<h2 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
-<p>DRN requires Python 3.8 or later and has the following dependencies:</p>
-<ul>
-<li>PyTorch (<code>torch</code>)</li>
-<li>PyTorch Lightning (<code>lightning</code>) </li>
-<li>NumPy (<code>numpy</code>)</li>
-<li>Pandas (<code>pandas</code>)</li>
-<li>Scikit-learn (<code>scikit-learn</code>)</li>
-<li>Statsmodels (<code>statsmodels</code>)</li>
-<li>SHAP (<code>shap</code>)</li>
-<li>Matplotlib (<code>matplotlib</code>)</li>
-<li>Seaborn (<code>seaborn</code>)</li>
-<li>tqdm (<code>tqdm</code>)</li>
-</ul>
-<h2 id="install-from-pypi">Install from PyPI<a class="headerlink" href="#install-from-pypi" title="Permanent link">&para;</a></h2>
-<p>The easiest way to install DRN is using pip:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>drn
-</code></pre></div>
-<h2 id="install-for-development">Install for Development<a class="headerlink" href="#install-for-development" title="Permanent link">&para;</a></h2>
-<p>If you want to contribute to DRN or need the latest development features:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-org/drn.git
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>drn
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span>
-</code></pre></div>
-<p>The <code>[dev]</code> option installs additional development dependencies:
-- <code>black</code> - Code formatting
-- <code>isort</code> - Import sorting
-- <code>mypy</code> - Type checking
-- <code>pytest</code> - Testing framework
-- <code>pre-commit</code> - Git hooks
-- <code>ipykernel</code> - Jupyter notebook support
-- <code>jupytext</code> - Jupyter notebook version control</p>
-<h2 id="verify-installation">Verify Installation<a class="headerlink" href="#verify-installation" title="Permanent link">&para;</a></h2>
-<p>To verify your installation is working correctly:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">drn</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">drn</span><span class="w"> </span><span class="kn">import</span> <span class="n">GLM</span><span class="p">,</span> <span class="n">DRN</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DRN version: </span><span class="si">{</span><span class="n">drn</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PyTorch version: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Test basic functionality</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">glm</span> <span class="o">=</span> <span class="n">GLM</span><span class="p">(</span><span class="s2">&quot;gaussian&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ GLM model created successfully&quot;</span><span class="p">)</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">drn_model</span> <span class="o">=</span> <span class="n">DRN</span><span class="p">(</span><span class="n">glm</span><span class="p">,</span> <span class="n">cutpoints</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✓ DRN model created successfully&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="gpu-support">GPU Support<a class="headerlink" href="#gpu-support" title="Permanent link">&para;</a></h2>
-<p>DRN automatically detects and uses GPU acceleration when available. PyTorch with CUDA support is recommended for large datasets:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># For CUDA 11.8</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu118
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># For CUDA 12.1</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>--index-url<span class="w"> </span>https://download.pytorch.org/whl/cu121
-</code></pre></div>
-<p>Check GPU availability:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CUDA available: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GPU count: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current GPU: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="common-installation-issues">Common Installation Issues<a class="headerlink" href="#common-installation-issues" title="Permanent link">&para;</a></h2>
-<h3 id="issue-module-not-found-after-installation">Issue: Module not found after installation<a class="headerlink" href="#issue-module-not-found-after-installation" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Make sure you're using the correct Python environment:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>which<span class="w"> </span>python
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>pip<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>drn
-</code></pre></div></p>
-<h3 id="issue-cuda-compatibility-problems">Issue: CUDA compatibility problems<a class="headerlink" href="#issue-cuda-compatibility-problems" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Install the correct PyTorch version for your CUDA version:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import torch; print(torch.version.cuda)&quot;</span>
-</code></pre></div></p>
-<h3 id="issue-memory-issues-during-installation">Issue: Memory issues during installation<a class="headerlink" href="#issue-memory-issues-during-installation" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Increase pip cache or use <code>--no-cache-dir</code>:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>drn
-</code></pre></div></p>
-<h3 id="issue-permission-denied-on-macoslinux">Issue: Permission denied on macOS/Linux<a class="headerlink" href="#issue-permission-denied-on-macoslinux" title="Permanent link">&para;</a></h3>
-<p><strong>Solution</strong>: Use virtual environment or user installation:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>drn
-</code></pre></div></p>
-<h2 id="virtual-environment-setup">Virtual Environment Setup<a class="headerlink" href="#virtual-environment-setup" title="Permanent link">&para;</a></h2>
-<p>We recommend using a virtual environment:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Using venv</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>drn-env
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">source</span><span class="w"> </span>drn-env/bin/activate<span class="w">  </span><span class="c1"># On Windows: drn-env\Scripts\activate</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>pip<span class="w"> </span>install<span class="w"> </span>drn
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># Using conda</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>drn-env<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>conda<span class="w"> </span>activate<span class="w"> </span>drn-env
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>pip<span class="w"> </span>install<span class="w"> </span>drn
-</code></pre></div>
-<h2 id="docker-installation">Docker Installation<a class="headerlink" href="#docker-installation" title="Permanent link">&para;</a></h2>
-<p>For containerized environments:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.9-slim</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>drn
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;your_script.py&quot;</span><span class="p">]</span>
-</code></pre></div>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
-<p>Once installation is complete, head to the <a href="../quickstart/">Quick Start</a> guide to learn the basics of using DRN.</p>
+<h1 id="ddr-deep-distribution-regression">DDR - Deep Distribution Regression<a class="headerlink" href="#ddr-deep-distribution-regression" title="Permanent link">&para;</a></h1>
+<p>The deep distributional regression model.</p>
+<hr />
+<h2 id="class-definition">Class Definition<a class="headerlink" href="#class-definition" title="Permanent link">&para;</a></h2>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="drn.models.ddr.DDR"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="drn.models.base.BaseModel" href="../base/#drn.models.base.BaseModel">BaseModel</a></code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h3 id="drn.models.ddr.DDR-functions">Functions<a href="#drn.models.ddr.DDR-functions" class="headerlink" title="Permanent link">&para;</a></h3>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="drn.models.ddr.DDR.__init__" class="doc doc-heading">
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">cutpoints</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_hidden_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">proportion</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">loss_metric</span><span class="o">=</span><span class="s1">&#39;jbce&#39;</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span></code>
+
+<a href="#drn.models.ddr.DDR.__init__" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Args:
+    x_train_shape: The shape of the training data, used to define the input size of the first layer.
+    cutpoints: The cutpoints for the DDR model.
+    num_hidden_layers: The number of hidden layers in the network.
+    hidden_size: The number of neurons in each hidden layer.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="drn.models.ddr.DDR.forward" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">forward</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+
+<a href="#drn.models.ddr.DDR.forward" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Forward pass of the DDR model.
+Args:
+    x: Input tensor.
+Returns:
+    The cutpoints and probabilities for the DDR model.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="loss-functions">Loss Functions<a class="headerlink" href="#loss-functions" title="Permanent link">&para;</a></h2>
+<h3 id="jbce-loss">JBCE Loss<a class="headerlink" href="#jbce-loss" title="Permanent link">&para;</a></h3>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="drn.models.ddr.jbce_loss"></a>
+    <div class="doc doc-contents first">
+
+        <p>The joint binary cross entropy loss.
+Args:
+    dists: the predicted distributions
+    y: the observed values
+    alpha: the penalty parameter</p>
+
+
+    </div>
+
+</div><h3 id="nll-loss">NLL Loss<a class="headerlink" href="#nll-loss" title="Permanent link">&para;</a></h3>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="drn.models.ddr.nll_loss"></a>
+    <div class="doc doc-contents first">
+
+
+    </div>
+
+</div>
 
 
 
@@ -1184,10 +1452,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

@@ -12,28 +12,28 @@
         <meta name="author" content="Eric Dong, Patrick Laub">
       
       
-        <link rel="canonical" href="https://drn-docs.readthedocs.io/api/metrics/">
+        <link rel="canonical" href="https://drn-docs.readthedocs.io/api/models/constant/">
       
       
-        <link rel="prev" href="../training/">
+        <link rel="prev" href="../base/">
       
       
-        <link rel="next" href="../interpretability/">
+        <link rel="next" href="../glm/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
     
     
       
-        <title>Metrics - drn Python Package</title>
+        <title>Constant - drn Python Package</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e37652d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#metrics" class="md-skip">
+        <a href="#constant-constant-prediction-model" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="drn Python Package" class="md-header__button md-logo" aria-label="drn Python Package" data-md-component="logo">
+    <a href="../../.." title="drn Python Package" class="md-header__button md-logo" aria-label="drn Python Package" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Metrics
+              Constant
             
           </span>
         </div>
@@ -230,7 +230,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -251,7 +251,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../getting-started/quickstart/" class="md-tabs__link">
+        <a href="../../../getting-started/quickstart/" class="md-tabs__link">
           
   
   
@@ -273,7 +273,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -307,7 +307,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="drn Python Package" class="md-nav__button md-logo" aria-label="drn Python Package" data-md-component="logo">
+    <a href="../../.." title="drn Python Package" class="md-nav__button md-logo" aria-label="drn Python Package" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -337,7 +337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -402,7 +402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/quickstart/" class="md-nav__link">
+      <a href="../../../getting-started/quickstart/" class="md-nav__link">
         
   
   
@@ -425,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/concepts/" class="md-nav__link">
+      <a href="../../../getting-started/concepts/" class="md-nav__link">
         
   
   
@@ -448,7 +448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/advanced-usage/" class="md-nav__link">
+      <a href="../../../getting-started/advanced-usage/" class="md-nav__link">
         
   
   
@@ -524,6 +524,72 @@
   
   
     <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Models
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Models
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../" class="md-nav__link">
         
   
@@ -546,294 +612,13 @@
   
   
   
-    
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    Models
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            Models
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../models/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Overview
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/base/" class="md-nav__link">
+      <a href="../base/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     BaseModel
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/constant/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Constant
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/glm/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    GLM
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/deepglm/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    DeepGLM
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/cann/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    CANN
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/mdn/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    MDN
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/ddr/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    DDR
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../models/drn/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    DRN
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../distributions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Distributions
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../training/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Training
     
   </span>
   
@@ -865,7 +650,7 @@
   
   
   <span class="md-ellipsis">
-    Metrics
+    Constant
     
   </span>
   
@@ -878,7 +663,7 @@
   
   
   <span class="md-ellipsis">
-    Metrics
+    Constant
     
   </span>
   
@@ -901,64 +686,103 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#distributional-metrics" class="md-nav__link">
+  <a href="#class-definition" class="md-nav__link">
     <span class="md-ellipsis">
-      Distributional Metrics
+      Class Definition
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Distributional Metrics">
+    <nav class="md-nav" aria-label="Class Definition">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#crps-continuous-ranked-probability-score" class="md-nav__link">
+  <a href="#drn.models.constant.Constant" class="md-nav__link">
     <span class="md-ellipsis">
-      CRPS (Continuous Ranked Probability Score)
+      Constant
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#drn.metrics.crps" class="md-nav__link">
+  <a href="#drn.models.constant.Constant-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      crps
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.constant.Constant.clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      clone
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quantile-score" class="md-nav__link">
+  <a href="#drn.models.constant.Constant.predict" class="md-nav__link">
     <span class="md-ellipsis">
-      Quantile Score
+      predict
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#drn.metrics.quantile_score" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      quantile_score
+      Overview
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#quantile-losses" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Quantile Losses
+      Key Features
     </span>
   </a>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#drn.metrics.quantile_losses" class="md-nav__link">
+  <a href="#benchmarking" class="md-nav__link">
     <span class="md-ellipsis">
-      quantile_losses
+      Benchmarking
     </span>
   </a>
   
@@ -970,61 +794,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#point-prediction-metrics" class="md-nav__link">
+  <a href="#performance-characteristics" class="md-nav__link">
     <span class="md-ellipsis">
-      Point Prediction Metrics
+      Performance Characteristics
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Point Prediction Metrics">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rmse-root-mean-squared-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      RMSE (Root Mean Squared Error)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.metrics.rmse" class="md-nav__link">
-    <span class="md-ellipsis">
-      rmse
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#utility-functions" class="md-nav__link">
+  <a href="#supported-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Utility Functions
+      Supported Distributions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Utility Functions">
+    <nav class="md-nav" aria-label="Supported Distributions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#binary-search-for-quantiles" class="md-nav__link">
+  <a href="#continuous-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Binary Search for Quantiles
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.utils.binary_search_icdf" class="md-nav__link">
-    <span class="md-ellipsis">
-      binary_search_icdf
+      Continuous Distributions
     </span>
   </a>
   
@@ -1051,7 +842,222 @@
   
   
     <li class="md-nav__item">
-      <a href="../interpretability/" class="md-nav__link">
+      <a href="../glm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GLM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deepglm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DeepGLM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cann/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CANN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MDN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ddr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DDR
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DRN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distributions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../interpretability/" class="md-nav__link">
         
   
   
@@ -1074,7 +1080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../utils/" class="md-nav__link">
+      <a href="../../utils/" class="md-nav__link">
         
   
   
@@ -1124,64 +1130,103 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#distributional-metrics" class="md-nav__link">
+  <a href="#class-definition" class="md-nav__link">
     <span class="md-ellipsis">
-      Distributional Metrics
+      Class Definition
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Distributional Metrics">
+    <nav class="md-nav" aria-label="Class Definition">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#crps-continuous-ranked-probability-score" class="md-nav__link">
+  <a href="#drn.models.constant.Constant" class="md-nav__link">
     <span class="md-ellipsis">
-      CRPS (Continuous Ranked Probability Score)
+      Constant
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#drn.metrics.crps" class="md-nav__link">
+  <a href="#drn.models.constant.Constant-functions" class="md-nav__link">
     <span class="md-ellipsis">
-      crps
+      Functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.constant.Constant.clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      clone
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quantile-score" class="md-nav__link">
+  <a href="#drn.models.constant.Constant.predict" class="md-nav__link">
     <span class="md-ellipsis">
-      Quantile Score
+      predict
     </span>
   </a>
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#drn.metrics.quantile_score" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
-      quantile_score
+      Overview
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#quantile-losses" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
     <span class="md-ellipsis">
-      Quantile Losses
+      Key Features
     </span>
   </a>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Cases
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Cases">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#drn.metrics.quantile_losses" class="md-nav__link">
+  <a href="#benchmarking" class="md-nav__link">
     <span class="md-ellipsis">
-      quantile_losses
+      Benchmarking
     </span>
   </a>
   
@@ -1193,61 +1238,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#point-prediction-metrics" class="md-nav__link">
+  <a href="#performance-characteristics" class="md-nav__link">
     <span class="md-ellipsis">
-      Point Prediction Metrics
+      Performance Characteristics
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Point Prediction Metrics">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rmse-root-mean-squared-error" class="md-nav__link">
-    <span class="md-ellipsis">
-      RMSE (Root Mean Squared Error)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.metrics.rmse" class="md-nav__link">
-    <span class="md-ellipsis">
-      rmse
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#utility-functions" class="md-nav__link">
+  <a href="#supported-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Utility Functions
+      Supported Distributions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Utility Functions">
+    <nav class="md-nav" aria-label="Supported Distributions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#binary-search-for-quantiles" class="md-nav__link">
+  <a href="#continuous-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Binary Search for Quantiles
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.utils.binary_search_icdf" class="md-nav__link">
-    <span class="md-ellipsis">
-      binary_search_icdf
+      Continuous Distributions
     </span>
   </a>
   
@@ -1277,140 +1289,194 @@
   
 
 
-<h1 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h1>
-<p>Evaluation metrics for distributional regression models, including both traditional point prediction metrics and distribution-aware measures.</p>
-<h2 id="distributional-metrics">Distributional Metrics<a class="headerlink" href="#distributional-metrics" title="Permanent link">&para;</a></h2>
-<h3 id="crps-continuous-ranked-probability-score">CRPS (Continuous Ranked Probability Score)<a class="headerlink" href="#crps-continuous-ranked-probability-score" title="Permanent link">&para;</a></h3>
+<h1 id="constant-constant-prediction-model">Constant - Constant Prediction Model<a class="headerlink" href="#constant-constant-prediction-model" title="Permanent link">&para;</a></h1>
+<p>Simple baseline model that predicts constant distributions for benchmarking and ablation studies.</p>
+<hr />
+<h2 id="class-definition">Class Definition<a class="headerlink" href="#class-definition" title="Permanent link">&para;</a></h2>
 
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="drn.models.constant.Constant"></a>
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="drn.models.base.BaseModel" href="../base/#drn.models.base.BaseModel">BaseModel</a></code></p>
+
+
+        <p>A baseline model that predicts a constant distribution, ignoring covariates.</p>
+<ul>
+<li>Before fit(): mean = 1 (Gamma/IG), 0 (Gaussian); dispersion = 1.</li>
+<li>fit(): ignores X, sets mean to y_train.mean(), estimates dispersion via estimate_dispersion.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<h3 id="drn.models.constant.Constant-functions">Functions<a href="#drn.models.constant.Constant-functions" class="headerlink" title="Permanent link">&para;</a></h3>
 
 <div class="doc doc-object doc-function">
 
 
-<h3 id="drn.metrics.crps" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">drn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">crps</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">cdf_on_grid</span><span class="p">)</span></code>
+<h4 id="drn.models.constant.Constant.clone" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">clone</span><span class="p">()</span></code>
 
-<a href="#drn.metrics.crps" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents first">
-
-        <p>Compute CRPS using the provided grid and CDF values with PyTorch tensors.</p>
-<p>:param obs: observed value(s)
-:param grid: a grid over y values
-:param cdf_on_grid: tensor of corresponding CDF values or a 2D tensor where each column is a CDF
-:return: CRPS value(s) as a PyTorch tensor</p>
+<a href="#drn.models.constant.Constant.clone" class="headerlink" title="Permanent link">&para;</a></h4>
 
 
-    </div>
+    <div class="doc doc-contents ">
 
-</div><h3 id="quantile-score">Quantile Score<a class="headerlink" href="#quantile-score" title="Permanent link">&para;</a></h3>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="drn.metrics.quantile_score" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">drn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">quantile_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
-
-<a href="#drn.metrics.quantile_score" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents first">
-
-        <p>Compute the quantile score for predictions at a specific quantile.</p>
-<p>:param y_true: Actual target values as a Pandas Series or PyTorch tensor.
-:param y_pred: Predicted target values as a numpy array or PyTorch tensor.
-:param p: The cumulative probability as a float
-:return: The quantile score as a PyTorch tensor.</p>
-
-
-    </div>
-
-</div><h3 id="quantile-losses">Quantile Losses<a class="headerlink" href="#quantile-losses" title="Permanent link">&para;</a></h3>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="drn.metrics.quantile_losses" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">drn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">quantile_losses</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">5e-05</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">print_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
-
-<a href="#drn.metrics.quantile_losses" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents first">
-
-        <p>Calculate and optionally print the quantile loss for the given data and model.</p>
-<p>:param p: The cumulative probability ntile as a float
-:param model: The trained model.
-:param model_name: The name of the trained model.
-:param X: Input features as a Pandas DataFrame or numpy array.
-:param y: True target values as a Pandas Series or numpy array.
-:param max_iter: The maximum number of iterations for the quantile search algorithm.
-:param tolerance: The tolerance for convergence of the the quantile search algorithm.
-:param l: The lower bound for the quantile search
-:param u: The upper bound for the quantile search
-:param print_score: A boolean indicating whether to print the score.
-:return: The quantile loss as a PyTorch tensor.</p>
-
-
-    </div>
-
-</div><h2 id="point-prediction-metrics">Point Prediction Metrics<a class="headerlink" href="#point-prediction-metrics" title="Permanent link">&para;</a></h2>
-<h3 id="rmse-root-mean-squared-error">RMSE (Root Mean Squared Error)<a class="headerlink" href="#rmse-root-mean-squared-error" title="Permanent link">&para;</a></h3>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="drn.metrics.rmse" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">drn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">rmse</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">)</span></code>
-
-<a href="#drn.metrics.rmse" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents first">
-
-        <p>Compute the Root Mean Square Error (RMSE) between the true values and predictions.</p>
-<p>:param y: True target values. Can be a Pandas Series or a PyTorch tensor.
-:param y_hat: Predicted target values. Should be a PyTorch tensor.
-:return: The RMSE as a PyTorch tensor.</p>
-
-
-    </div>
-
-</div><h2 id="utility-functions">Utility Functions<a class="headerlink" href="#utility-functions" title="Permanent link">&para;</a></h2>
-<h3 id="binary-search-for-quantiles">Binary Search for Quantiles<a class="headerlink" href="#binary-search-for-quantiles" title="Permanent link">&para;</a></h3>
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="drn.utils.binary_search_icdf" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">drn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">binary_search_icdf</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-07</span><span class="p">)</span></code>
-
-<a href="#drn.utils.binary_search_icdf" class="headerlink" title="Permanent link">&para;</a></h3>
-
-
-    <div class="doc doc-contents first">
-
-        <p>Generic binary search implementation for inverse CDF (quantiles).</p>
-<p>This function can be used by any distribution that has a <code>cdf</code> method
-but doesn't have its own <code>icdf</code> implementation.</p>
-<p>Args:
-    distribution: Distribution object with a <code>cdf</code> method
-    p: cumulative probability value at which to evaluate icdf
-    l: lower bound for the quantile search
-    u: upper bound for the quantile search
-    max_iter: maximum number of iterations
-    tolerance: stopping criteria for convergence</p>
-<p>Returns:
-    A tensor of shape (1, batch_shape) containing the inverse CDF values.</p>
+        <p>Create a copy of the model with the same parameters.</p>
 
 
     </div>
 
 </div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="drn.models.constant.Constant.predict" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+
+<a href="#drn.models.constant.Constant.predict" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Create a (constant) distributional forecast for the given inputs.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div><h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Constant model provides:
+- <strong>Simple baselines</strong> - Predict same distribution for all inputs
+- <strong>Benchmarking</strong> - Performance comparison baseline
+- <strong>Ablation studies</strong> - Control model for feature importance
+- <strong>Sanity checks</strong> - Verify that other models add value</p>
+<h2 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Distribution fitting</strong> - Fits single distribution to all training data</li>
+<li><strong>Fast inference</strong> - No feature processing required</li>
+<li><strong>Multiple distributions</strong> - Supports Gaussian, Gamma, etc.</li>
+<li><strong>Debugging tool</strong> - Helps identify modeling issues</li>
+</ul>
+<h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">drn.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Constant</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Fit constant Gamma distribution</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">constant_model</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;gamma&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">constant_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># All predictions are identical</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">pred1</span> <span class="o">=</span> <span class="n">constant_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">pred2</span> <span class="o">=</span> <span class="n">constant_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">101</span><span class="p">])</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Same distribution parameters</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">pred1</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">pred2</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">pred1</span><span class="o">.</span><span class="n">variance</span><span class="p">,</span> <span class="n">pred2</span><span class="o">.</span><span class="n">variance</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">&para;</a></h2>
+<h3 id="benchmarking">Benchmarking<a class="headerlink" href="#benchmarking" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">drn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">crps</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Compare against constant baseline</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">constant_baseline</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">constant_baseline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">your_model</span> <span class="o">=</span> <span class="n">SomeModel</span><span class="p">()</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">your_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Evaluate both</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">constant_pred</span> <span class="o">=</span> <span class="n">constant_baseline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">your_pred</span> <span class="o">=</span> <span class="n">your_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">constant_rmse</span> <span class="o">=</span> <span class="n">rmse</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">constant_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">your_rmse</span> <span class="o">=</span> <span class="n">rmse</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">your_pred</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Constant baseline RMSE: </span><span class="si">{</span><span class="n">constant_rmse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Your model RMSE: </span><span class="si">{</span><span class="n">your_rmse</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Improvement: </span><span class="si">{</span><span class="p">((</span><span class="n">constant_rmse</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">your_rmse</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">constant_rmse</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="performance-characteristics">Performance Characteristics<a class="headerlink" href="#performance-characteristics" title="Permanent link">&para;</a></h2>
+<p>The Constant model excels in simplicity and speed:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Rating</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Training Speed</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>Instant - just fits distribution to data</td>
+</tr>
+<tr>
+<td><strong>Memory Usage</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>Minimal - stores only distribution parameters</td>
+</tr>
+<tr>
+<td><strong>Flexibility</strong></td>
+<td>⭐</td>
+<td>None - same prediction for all inputs</td>
+</tr>
+<tr>
+<td><strong>Interpretability</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>Perfect - single fitted distribution</td>
+</tr>
+<tr>
+<td><strong>Stability</strong></td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>Maximum - no complexity to cause instability</td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-distributions">Supported Distributions<a class="headerlink" href="#supported-distributions" title="Permanent link">&para;</a></h2>
+<p>The Constant model supports various distributions, but can be easily extended:</p>
+<h3 id="continuous-distributions">Continuous Distributions<a class="headerlink" href="#continuous-distributions" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Gaussian for unbounded data</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">constant_gaussian</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s1">&#39;gaussian&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Gamma for positive data  </span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">constant_gamma</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Log-normal for multiplicative processes</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">constant_lognormal</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s1">&#39;lognormal&#39;</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Inverse Gaussian for right-skewed positive data</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">constant_ig</span> <span class="o">=</span> <span class="n">Constant</span><span class="p">(</span><span class="s1">&#39;inversegaussian&#39;</span><span class="p">)</span>
+</code></pre></div>
 
 
 
@@ -1495,10 +1561,10 @@ but doesn't have its own <code>icdf</code> implementation.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.annotate", "content.code.copy", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.92b07e13.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

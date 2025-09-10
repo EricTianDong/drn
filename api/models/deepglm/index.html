@@ -12,13 +12,13 @@
         <meta name="author" content="Eric Dong, Patrick Laub">
       
       
-        <link rel="canonical" href="https://drn-docs.readthedocs.io/api/models/base/">
+        <link rel="canonical" href="https://drn-docs.readthedocs.io/api/models/deepglm/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../glm/">
       
       
-        <link rel="next" href="../constant/">
+        <link rel="next" href="../cann/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>BaseModel - drn Python Package</title>
+        <title>DeepGLM - drn Python Package</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#basemodel" class="md-skip">
+        <a href="#deepglm-deep-generalized-linear-model" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              BaseModel
+              DeepGLM
             
           </span>
         </div>
@@ -610,32 +610,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    BaseModel
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../base/" class="md-nav__link">
         
   
   
@@ -646,215 +624,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#class-definition" class="md-nav__link">
-    <span class="md-ellipsis">
-      Class Definition
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Class Definition">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel" class="md-nav__link">
-    <span class="md-ellipsis">
-      BaseModel
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Functions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.icdf" class="md-nav__link">
-    <span class="md-ellipsis">
-      icdf
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.predict" class="md-nav__link">
-    <span class="md-ellipsis">
-      predict
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.preprocess" class="md-nav__link">
-    <span class="md-ellipsis">
-      preprocess
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.quantiles" class="md-nav__link">
-    <span class="md-ellipsis">
-      quantiles
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Key Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#training-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Training Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Training Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fitx_train-y_train-x_valnone-y_valnone-kwargs" class="md-nav__link">
-    <span class="md-ellipsis">
-      fit(X_train, y_train, X_val=None, y_val=None, **kwargs)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prediction-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prediction Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Prediction Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#predictx_raw" class="md-nav__link">
-    <span class="md-ellipsis">
-      predict(x_raw)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#quantilesx-percentiles-lnone-unone-kwargs" class="md-nav__link">
-    <span class="md-ellipsis">
-      quantiles(x, percentiles, l=None, u=None, **kwargs)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#abstract-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Abstract Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Abstract Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lossx-y-torchtensor" class="md-nav__link">
-    <span class="md-ellipsis">
-      loss(x, y) -&gt; torch.Tensor
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_predictx-distribution" class="md-nav__link">
-    <span class="md-ellipsis">
-      _predict(x) -&gt; Distribution
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -910,10 +679,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../deepglm/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    DeepGLM
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -924,6 +715,134 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#class-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class Definition
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Class Definition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drn.models.deepglm.DeepGLM" class="md-nav__link">
+    <span class="md-ellipsis">
+      DeepGLM
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Distributions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Distributions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gamma-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gamma Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gaussian-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gaussian Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverse-gaussian-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inverse Gaussian Distribution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-with-traditional-glm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with Traditional GLM
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1188,62 +1107,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel" class="md-nav__link">
+  <a href="#drn.models.deepglm.DeepGLM" class="md-nav__link">
     <span class="md-ellipsis">
-      BaseModel
+      DeepGLM
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Functions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.icdf" class="md-nav__link">
-    <span class="md-ellipsis">
-      icdf
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.predict" class="md-nav__link">
-    <span class="md-ellipsis">
-      predict
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.preprocess" class="md-nav__link">
-    <span class="md-ellipsis">
-      preprocess
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#drn.models.base.BaseModel.quantiles" class="md-nav__link">
-    <span class="md-ellipsis">
-      quantiles
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1262,29 +1130,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-methods" class="md-nav__link">
+  <a href="#supported-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Methods
+      Supported Distributions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Key Methods">
+    <nav class="md-nav" aria-label="Supported Distributions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#training-methods" class="md-nav__link">
+  <a href="#gamma-distribution" class="md-nav__link">
     <span class="md-ellipsis">
-      Training Methods
+      Gamma Distribution
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Training Methods">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
-  <a href="#fitx_train-y_train-x_valnone-y_valnone-kwargs" class="md-nav__link">
+  <a href="#gaussian-distribution" class="md-nav__link">
     <span class="md-ellipsis">
-      fit(X_train, y_train, X_val=None, y_val=None, **kwargs)
+      Gaussian Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inverse-gaussian-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inverse Gaussian Distribution
     </span>
   </a>
   
@@ -1294,70 +1170,32 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#prediction-methods" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      Prediction Methods
+      Quick Start
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Prediction Methods">
+    <nav class="md-nav" aria-label="Quick Start">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#predictx_raw" class="md-nav__link">
+  <a href="#basic-usage" class="md-nav__link">
     <span class="md-ellipsis">
-      predict(x_raw)
+      Basic Usage
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#quantilesx-percentiles-lnone-unone-kwargs" class="md-nav__link">
+  <a href="#comparison-with-traditional-glm" class="md-nav__link">
     <span class="md-ellipsis">
-      quantiles(x, percentiles, l=None, u=None, **kwargs)
+      Comparison with Traditional GLM
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#abstract-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Abstract Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Abstract Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lossx-y-torchtensor" class="md-nav__link">
-    <span class="md-ellipsis">
-      loss(x, y) -&gt; torch.Tensor
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_predictx-distribution" class="md-nav__link">
-    <span class="md-ellipsis">
-      _predict(x) -&gt; Distribution
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1385,8 +1223,8 @@
   
 
 
-<h1 id="basemodel">BaseModel<a class="headerlink" href="#basemodel" title="Permanent link">&para;</a></h1>
-<p>The abstract foundation for all distributional regression models in DRN. Provides unified interface, PyTorch Lightning integration, and common functionality.</p>
+<h1 id="deepglm-deep-generalized-linear-model">DeepGLM - Deep Generalized Linear Model<a class="headerlink" href="#deepglm-deep-generalized-linear-model" title="Permanent link">&para;</a></h1>
+<p>A neural network approach to distributional regression that combines the interpretable structure of GLMs with the flexibility of deep learning. DeepGLM learns nonlinear feature representations while maintaining distributional outputs.</p>
 <hr />
 <h2 id="class-definition">Class Definition<a class="headerlink" href="#class-definition" title="Permanent link">&para;</a></h2>
 
@@ -1395,11 +1233,22 @@
 
 
 
-<a id="drn.models.base.BaseModel"></a>
+<a id="drn.models.deepglm.DeepGLM"></a>
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><span title="lightning.LightningModule">LightningModule</span></code>, <code><span title="abc.ABC">ABC</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" title="drn.models.base.BaseModel" href="../base/#drn.models.base.BaseModel">BaseModel</a></code></p>
 
+
+        <p>Deep Generalized Linear Model (DeepGLM).</p>
+<p>The model learns a nonlinear representation of the inputs via a feed-forward
+neural network and then applies a GLM head to produce the conditional mean.
+A fixed dispersion parameter is estimated after training via a classical
+deviance-based estimator (see <code>estimate_dispersion</code>).</p>
+<p>Supported response distributions:
+    - 'gamma' (log link)
+    - 'gaussian' (identity link)
+    - 'inversegaussian' (log link)
+    - 'lognormal' (identity on log-scale parameter; distributional head is LogNormal)</p>
 
 
 
@@ -1420,92 +1269,7 @@
 
 
 
-<h3 id="drn.models.base.BaseModel-functions">Functions<a href="#drn.models.base.BaseModel-functions" class="headerlink" title="Permanent link">&para;</a></h3>
 
-<div class="doc doc-object doc-function">
-
-
-<h4 id="drn.models.base.BaseModel.icdf" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">icdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-07</span><span class="p">)</span></code>
-
-<a href="#drn.models.base.BaseModel.icdf" class="headerlink" title="Permanent link">&para;</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Calculate the inverse CDF (quantiles) of the distribution for the given cumulative probability.</p>
-<p>This is a fallback implementation for PyTorch distributions that don't have icdf implemented.</p>
-<p>Args:
-    x: Input features
-    p: cumulative probability value at which to evaluate icdf
-    l: lower bound for the quantile search
-    u: upper bound for the quantile search
-    max_iter: maximum number of iterations
-    tolerance: stopping criteria</p>
-<p>Returns:
-    A tensor of shape (1, batch_shape) containing the inverse CDF values.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="drn.models.base.BaseModel.predict" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">predict</span><span class="p">(</span><span class="n">x_raw</span><span class="p">)</span></code>
-
-<a href="#drn.models.base.BaseModel.predict" class="headerlink" title="Permanent link">&para;</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Creates a distributional prediction for the input data.
-Here, <code>x_raw</code> is raw data, and this method will apply any model-specific preprocessing.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="drn.models.base.BaseModel.preprocess" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">preprocess</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
-
-<a href="#drn.models.base.BaseModel.preprocess" class="headerlink" title="Permanent link">&para;</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Convert input data to a PyTorch tensor. Apply any neural network preprocessing (if applicable).</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h4 id="drn.models.base.BaseModel.quantiles" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">quantiles</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">percentiles</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">u</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-07</span><span class="p">)</span></code>
-
-<a href="#drn.models.base.BaseModel.quantiles" class="headerlink" title="Permanent link">&para;</a></h4>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Calculate the quantile values for the given observations and percentiles (cumulative probabilities * 100).</p>
-<p>This unified implementation first checks if the distribution has its own quantiles method,
-then falls back to icdf-based approach.</p>
-
-
-    </div>
-
-</div>
 
 
 
@@ -1515,53 +1279,105 @@ then falls back to icdf-based approach.</p>
 
 </div><hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p><code>BaseModel</code> is the abstract base class that all DRN models inherit from. It provides:</p>
+<p>The <code>DeepGLM</code> class extends traditional GLMs by learning nonlinear feature transformations through a feed-forward neural network before applying the GLM head. Key features:</p>
 <ul>
-<li><strong>Unified Interface</strong> - Consistent <code>.fit()</code>, <code>.predict()</code>, and <code>.quantiles()</code> methods</li>
-<li><strong>PyTorch Lightning Integration</strong> - Built-in training loops, early stopping, checkpointing</li>
-<li><strong>Automatic Data Handling</strong> - Conversion between pandas/numpy and PyTorch tensors</li>
-<li><strong>GPU Support</strong> - Automatic device detection and tensor placement</li>
-<li><strong>Distribution Interface</strong> - Common methods for working with distributional predictions</li>
+<li><strong>Nonlinear Feature Learning</strong> - Multi-layer neural network for complex patterns</li>
+<li><strong>Distributional Outputs</strong> - Full probability distributions, not just point predictions</li>
+<li><strong>Multiple Distribution Families</strong> - Gamma, Gaussian, and Inverse Gaussian support</li>
+<li><strong>End-to-End Training</strong> - Unified loss function combining representation learning and GLM fitting</li>
+<li><strong>Flexible Architecture</strong> - Configurable network depth and width</li>
+<li><strong>Post-hoc Dispersion Estimation</strong> - Classical statistical estimation after neural training</li>
 </ul>
-<h2 id="key-methods">Key Methods<a class="headerlink" href="#key-methods" title="Permanent link">&para;</a></h2>
-<h3 id="training-methods">Training Methods<a class="headerlink" href="#training-methods" title="Permanent link">&para;</a></h3>
-<h4 id="fitx_train-y_train-x_valnone-y_valnone-kwargs"><code>fit(X_train, y_train, X_val=None, y_val=None, **kwargs)</code><a class="headerlink" href="#fitx_train-y_train-x_valnone-y_valnone-kwargs" title="Permanent link">&para;</a></h4>
-<p>Main training method that handles the complete training workflow:</p>
-<ul>
-<li><strong>Data preprocessing</strong> and tensor conversion</li>
-<li><strong>DataLoader creation</strong> with batching and shuffling  </li>
-<li><strong>Validation setup</strong> with early stopping (if validation data provided)</li>
-<li><strong>Model checkpointing</strong> and best weight restoration</li>
-<li><strong>GPU acceleration</strong> when available</li>
-</ul>
-<p><strong>Parameters:</strong>
-- <code>X_train, y_train</code> - Training features and targets (pandas/numpy/tensor)
-- <code>X_val, y_val</code> - Optional validation data for early stopping
-- <code>batch_size</code> - Training batch size (default: 128)
-- <code>epochs</code> - Maximum training epochs (default: 10)
-- <code>patience</code> - Early stopping patience (default: 5)
-- <code>**trainer_kwargs</code> - Additional PyTorch Lightning trainer arguments</p>
-<h3 id="prediction-methods">Prediction Methods<a class="headerlink" href="#prediction-methods" title="Permanent link">&para;</a></h3>
-<h4 id="predictx_raw"><code>predict(x_raw)</code><a class="headerlink" href="#predictx_raw" title="Permanent link">&para;</a></h4>
-<p>Creates distributional predictions from input features:</p>
-<ul>
-<li><strong>Automatic preprocessing</strong> - Handles pandas/numpy to tensor conversion</li>
-<li><strong>Returns distribution objects</strong> - With <code>.mean</code>, <code>.quantiles()</code>, <code>.cdf()</code>, etc.</li>
-<li><strong>Consistent interface</strong> - Same API across all model types</li>
-</ul>
-<h4 id="quantilesx-percentiles-lnone-unone-kwargs"><code>quantiles(x, percentiles, l=None, u=None, **kwargs)</code><a class="headerlink" href="#quantilesx-percentiles-lnone-unone-kwargs" title="Permanent link">&para;</a></h4>
-<p>Unified quantile calculation supporting all distribution types:</p>
-<ul>
-<li><strong>Multiple percentiles</strong> - Calculate several quantiles at once</li>
-<li><strong>Bounds specification</strong> - Optional lower/upper bounds for search</li>
-<li><strong>Automatic fallback</strong> - Uses binary search when analytic quantiles unavailable</li>
-</ul>
-<h3 id="abstract-methods">Abstract Methods<a class="headerlink" href="#abstract-methods" title="Permanent link">&para;</a></h3>
-<p>Subclasses must implement:</p>
-<h4 id="lossx-y-torchtensor"><code>loss(x, y) -&gt; torch.Tensor</code><a class="headerlink" href="#lossx-y-torchtensor" title="Permanent link">&para;</a></h4>
-<p>Define the loss function for model training.</p>
-<h4 id="_predictx-distribution"><code>_predict(x) -&gt; Distribution</code><a class="headerlink" href="#_predictx-distribution" title="Permanent link">&para;</a></h4>
-<p>Core prediction logic returning PyTorch distribution objects.</p>
+<h2 id="supported-distributions">Supported Distributions<a class="headerlink" href="#supported-distributions" title="Permanent link">&para;</a></h2>
+<h3 id="gamma-distribution">Gamma Distribution<a class="headerlink" href="#gamma-distribution" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">deepglm</span> <span class="o">=</span> <span class="n">DeepGLM</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="n">num_hidden_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</code></pre></div>
+- <strong>Use Case</strong>: Positive continuous data with right skew
+- <strong>Link Function</strong>: Log (<code>log(μ) = η</code>)
+- <strong>Best For</strong>: Insurance claims, sales amounts, service times
+- <strong>Output</strong>: Gamma distribution with learned mean and estimated dispersion</p>
+<h3 id="gaussian-distribution">Gaussian Distribution<a class="headerlink" href="#gaussian-distribution" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">deepglm</span> <span class="o">=</span> <span class="n">DeepGLM</span><span class="p">(</span><span class="s1">&#39;gaussian&#39;</span><span class="p">,</span> <span class="n">num_hidden_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</code></pre></div>
+- <strong>Use Case</strong>: Continuous data with complex nonlinear patterns
+- <strong>Link Function</strong>: Identity (<code>μ = η</code>)
+- <strong>Best For</strong>: Complex regression tasks with symmetric errors
+- <strong>Output</strong>: Normal distribution with learned mean and estimated variance</p>
+<h3 id="inverse-gaussian-distribution">Inverse Gaussian Distribution<a class="headerlink" href="#inverse-gaussian-distribution" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">deepglm</span> <span class="o">=</span> <span class="n">DeepGLM</span><span class="p">(</span><span class="s1">&#39;inversegaussian&#39;</span><span class="p">,</span> <span class="n">num_hidden_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</code></pre></div>
+- <strong>Use Case</strong>: Positive data with extreme right tail and nonlinear relationships
+- <strong>Link Function</strong>: Log (<code>log(μ) = η</code>)
+- <strong>Best For</strong>: First passage times, duration modeling with complex covariates
+- <strong>Output</strong>: Inverse Gaussian distribution with learned parameters</p>
+<hr />
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="basic-usage">Basic Usage<a class="headerlink" href="#basic-usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">drn</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepGLM</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Load data with complex nonlinear relationships</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="s1">&#39;income&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="s1">&#39;risk_score&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">})</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># Create complex nonlinear target</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="mf">0.1</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">+</span> 
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">])</span> <span class="o">+</span> 
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="mf">2.0</span> <span class="o">*</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;risk_score&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># Train DeepGLM</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="n">deepglm</span> <span class="o">=</span> <span class="n">DeepGLM</span><span class="p">(</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>    <span class="n">num_hidden_layers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    <span class="n">dropout_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="p">)</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="n">deepglm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="c1"># Make distributional predictions</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">deepglm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="n">mean_pred</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">mean</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="n">percentiles</span> <span class="o">=</span> <span class="n">deepglm</span><span class="o">.</span><span class="n">quantiles</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+</code></pre></div>
+<h3 id="comparison-with-traditional-glm">Comparison with Traditional GLM<a class="headerlink" href="#comparison-with-traditional-glm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">drn</span><span class="w"> </span><span class="kn">import</span> <span class="n">GLM</span><span class="p">,</span> <span class="n">DeepGLM</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">drn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">crps</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Train traditional GLM</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">traditional_glm</span> <span class="o">=</span> <span class="n">GLM</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">traditional_glm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># Train DeepGLM</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">deep_glm</span> <span class="o">=</span> <span class="n">DeepGLM</span><span class="p">(</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span> <span class="n">num_hidden_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">deep_glm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># Compare predictions</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">glm_pred</span> <span class="o">=</span> <span class="n">traditional_glm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">deep_pred</span> <span class="o">=</span> <span class="n">deep_glm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1"># Evaluation metrics</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;GLM&#39;</span><span class="p">,</span> <span class="n">glm_pred</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;DeepGLM&#39;</span><span class="p">,</span> <span class="n">deep_pred</span><span class="p">)]:</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>    <span class="n">metrics</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="s1">&#39;rmse&#39;</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">pred</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>        <span class="s1">&#39;nll&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">pred</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">values</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="p">}</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model Comparison:&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Model&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;RMSE&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;NLL&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">35</span><span class="p">)</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;rmse&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;10.3f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">vals</span><span class="p">[</span><span class="s1">&#39;nll&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;10.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 
