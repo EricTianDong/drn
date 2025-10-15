@@ -140,10 +140,12 @@ class BaseModel(L.LightningModule, abc.ABC):
         if hasattr(self, "ct") and self.ct is not None and not targets:
             x = self.ct.transform(x)
 
-        if isinstance(x, pd.DataFrame) or isinstance(x, pd.Series):
-            x = x.values
+        # Convert the DataFrame/Series to numpy array
+        x_np = np.asarray(x)
+        if targets:
+            x_np = x_np.reshape(-1)
 
-        return torch.Tensor(x).to(self.device)
+        return torch.Tensor(x_np).to(self.device)
 
     def icdf(
         self,

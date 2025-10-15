@@ -5,6 +5,7 @@ os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
 import numpy as np
 import pandas as pd
+import pytest
 import torch
 import statsmodels.api as sm
 from statsmodels.genmod.families import Gamma
@@ -94,6 +95,34 @@ def test_glm_fit_with_statsmodels():
     sm_pred = sm_mod.predict(sm.add_constant(X_df))
     our_pred = glm3(_to_tensor(X_df)).cpu().detach().numpy()
     assert np.allclose(sm_pred, our_pred)
+
+
+def test_update_dispersion_dataframe_targets_matches_statsmodels():
+    """A DataFrame target should survive preprocess without corrupting dispersion."""
+
+    X_train, y_train, _, _ = generate_synthetic_data()
+    X_df = pd.DataFrame(X_train, columns=[f"X{i}" for i in range(X_train.shape[1])])
+    y_df = pd.DataFrame(y_train, columns=["Y"])
+
+    sm_results = sm.GLM(
+        y_df["Y"].values,
+        sm.add_constant(X_df.values),
+        family=Gamma(link=sm.families.links.Log()),
+    ).fit()
+
+    glm = GLM("gamma")
+    glm.linear = torch.nn.Linear(X_df.shape[1], 1)
+    with torch.no_grad():
+        glm.linear.weight.copy_(
+            torch.tensor(sm_results.params[1:], dtype=torch.float32).unsqueeze(0)
+        )
+        glm.linear.bias.copy_(
+            torch.tensor([sm_results.params[0]], dtype=torch.float32)
+        )
+
+    glm.update_dispersion(X_df, y_df)
+
+    assert glm.dispersion.item() == pytest.approx(sm_results.scale, rel=1e-3)
 
 
 def test_cann():
