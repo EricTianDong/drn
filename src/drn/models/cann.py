@@ -49,6 +49,9 @@ class CANN(BaseModel):
         # Store baseline model and lazy initialization parameters
         self.baseline = baseline.clone()
         self.train_glm = train_glm
+        # Decide whether to retrain the baseline parameters
+        for param in self.baseline.parameters():
+            param.requires_grad = self.train_glm
         self.distribution = baseline.distribution
         self.dispersion = nn.Parameter(torch.Tensor([torch.nan]), requires_grad=False)
 
