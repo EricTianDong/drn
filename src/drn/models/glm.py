@@ -27,11 +27,14 @@ class GLM(BaseModel):
         # Set default dispersion to 1 for numerical stability
         self.dispersion = nn.Parameter(torch.Tensor([1.0]), requires_grad=False)
 
-        self.loss_fn = (
-            gaussian_deviance_loss
-            if distribution == "gaussian"
-            else gamma_deviance_loss
-        )
+        if self.distribution == "inversegaussian":
+            self.loss_fn = inverse_gaussian_deviance_loss
+        else:
+            self.loss_fn = (
+                gaussian_deviance_loss
+                if self.distribution == "gaussian"
+                else gamma_deviance_loss
+            )
 
         self.learning_rate = learning_rate
         self.linear = nn.LazyLinear(1)
@@ -163,3 +166,30 @@ def gaussian_deviance_loss(y_pred: torch.Tensor, y_true: torch.Tensor) -> torch.
     """
     loss = (y_true - y_pred) ** 2
     return torch.mean(loss)
+
+
+def inverse_gaussian_deviance_loss(
+    y_pred: torch.Tensor, y_true: torch.Tensor
+) -> torch.Tensor:
+    """
+    Calculate the Inverse Gaussian (Tweedie p=3) unit deviance loss.
+
+    Unit deviance per observation:
+        d(y, mu) = (y - mu)^2 / (y * mu^2)
+
+    Args:
+        y_pred: predicted mean(s) mu, shape (n,) and strictly positive
+        y_true: observed y, shape (n,) and strictly positive
+    Returns:
+        Scalar mean deviance over observations.
+    Notes:
+        The IG model is only defined for y_true > 0 and y_pred > 0.
+        We clamp by a tiny epsilon for numerical stability.
+    """
+    # numerical safety for zeros/negatives
+    eps = torch.finfo(y_pred.dtype).eps if y_pred.is_floating_point() else 1e-12
+    mu = torch.clamp(y_pred, min=eps)
+    y = torch.clamp(y_true, min=eps)
+
+    loss = (y - mu).pow(2) / (y * mu.pow(2))
+    return loss.mean()

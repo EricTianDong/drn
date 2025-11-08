@@ -83,3 +83,9 @@ class Constant(BaseModel):
 
     def loss(self, X: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         return -self.predict(X).log_prob(y).mean()
+
+    def mean(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Calculate the predicted means for the given observations.
+        """
+        return self(x)

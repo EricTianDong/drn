@@ -12,8 +12,9 @@ from .glm import (
     estimate_dispersion,
     gamma_deviance_loss,
     gaussian_deviance_loss,
+    inverse_gaussian_deviance_loss,
 )
-
+from ..distributions import InverseGaussian
 from .base import BaseModel
 from .constant import Constant
 
@@ -68,11 +69,14 @@ class CANN(BaseModel):
 
         self.nn_output_layer = nn.Sequential(*layers)
 
-        self.loss_fn = (
-            gaussian_deviance_loss
-            if self.distribution == "gaussian"
-            else gamma_deviance_loss
-        )
+        if self.distribution == "inversegaussian":
+            self.loss_fn = inverse_gaussian_deviance_loss
+        else:
+            self.loss_fn = (
+                gaussian_deviance_loss
+                if self.distribution == "gaussian"
+                else gamma_deviance_loss
+            )
         self.learning_rate = learning_rate
 
     def fit(self, X_train, y_train, *args, **kwargs) -> CANN:
@@ -112,6 +116,8 @@ class CANN(BaseModel):
         if self.distribution == "gamma":
             alphas, betas = gamma_convert_parameters(self(x), self.dispersion)
             dists = torch.distributions.Gamma(alphas, betas)
+        elif self.distribution == "inversegaussian":
+            dists = InverseGaussian(self(x), self.dispersion)
         else:
             dists = torch.distributions.Normal(self(x), self.dispersion)
 

@@ -76,6 +76,7 @@ class ExtendedHistogram(Distribution):
             value = value.unsqueeze(0)
 
         baseline_prob = torch.exp(self.baseline.log_prob(value))
+        baseline_prob = torch.clip(baseline_prob, min=1e-10, max=1.0)
         hist_prob = self.histogram.prob(value) * (self.scale_down_hist + 1e-10)
 
         in_hist = (value >= self.histogram.cutpoints[0]) & (

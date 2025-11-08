@@ -45,7 +45,7 @@ def crps(
     return crps_values if crps_values.numel() > 1 else crps_values.item()
 
 
-def quantile_score(y_true, y_pred, p):
+def quantile_score(y_true, y_pred, p, mean_tensor=True):
     """
     Compute the quantile score for predictions at a specific quantile.
 
@@ -62,7 +62,10 @@ def quantile_score(y_true, y_pred, p):
     # Reshape y_pred to match y_true if necessary and compute the error
     e = y_true - y_pred.reshape(y_true.shape)
     # Compute the quantile score
-    return torch.where(y_true >= y_pred, p * e, (1 - p) * -e).mean()
+    if mean_tensor:
+        return torch.where(y_true >= y_pred, p * e, (1 - p) * -e).mean()
+    else:
+        return torch.where(y_true >= y_pred, p * e, (1 - p) * -e)
 
 
 def quantile_losses(
@@ -122,7 +125,7 @@ def rmse(y, y_hat):
     """
     # Convert y to a PyTorch tensor if it is not already one
     if not isinstance(y, torch.Tensor):
-        if hasattr(y, 'values'):  # pandas Series/DataFrame
+        if hasattr(y, "values"):  # pandas Series/DataFrame
             y = torch.Tensor(y.values)
         else:  # numpy array or other array-like
             y = torch.Tensor(y)
