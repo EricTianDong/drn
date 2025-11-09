@@ -262,6 +262,9 @@ def drn_cutpoints(
     if num_cutpoints is None and proportion is not None:
         num_cutpoints = int(np.ceil(proportion * len(y)))
 
+    # Ensure at least 2 cutpoints (minimum and maximum) to define at least one region
+    num_cutpoints = max(num_cutpoints, 2)
+
     uniform_cutpoints = np.linspace(c_0, c_K, num_cutpoints).tolist()
 
     return merge_cutpoints(uniform_cutpoints, y, min_obs)
