@@ -12,7 +12,12 @@ def gamma_estimate_dispersion(mu: torch.Tensor, y: torch.Tensor, p: int) -> floa
     n = mu.shape[0]
     dof = n - (p + 1)
     assert dof > 0, "Degrees of freedom must be positive to estimate dispersion (i.e. need n > p)."
-    return (torch.sum((y - mu) ** 2 / mu**2) / dof).item()
+
+    # We want to estimate dispersion = (torch.sum((y - mu) ** 2 / mu**2) / dof).item()
+    # however, if y or mu is large then (y - mu) ** 2 can become infinite leading to NaN dispersion.
+    r = y / mu - 1.0
+    phi = r.square().mean() * (n / dof)
+    return phi.item()
 
 
 def gamma_convert_parameters(
