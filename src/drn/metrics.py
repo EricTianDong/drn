@@ -42,7 +42,8 @@ def crps(
     crps_values = torch.sum((cdf_on_grid - heaviside_matrix) ** 2, dim=1) * dy
 
     # If x was a scalar, return a scalar. Otherwise, return a tensor.
-    return crps_values if crps_values.numel() > 1 else crps_values.item()
+    n = obs.shape[0]
+    return (crps_values if n > 1 else crps_values.item()) / n
 
 
 def quantile_score(y_true, y_pred, p, mean_tensor=True):
