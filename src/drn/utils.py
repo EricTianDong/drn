@@ -138,7 +138,7 @@ def split_data(
 
 def replace_rare_categories(
     df: pd.DataFrame,
-    threshold: int = 10,
+    threshold: int | float = 10,
     placeholder: str = "OTHER",
     cat_features: Optional[list[str]] = None,
 ) -> pd.DataFrame:
@@ -148,15 +148,21 @@ def replace_rare_categories(
     Parameters:
     - df: The input DataFrame.
     - threshold: Minimum number of occurrences for a category to be kept.
+               If >= 1: treated as absolute count (e.g., 10 means at least 10 occurrences).
+               If < 1: treated as percentage of total rows (e.g., 0.01 means at least 1%).
     - placeholder: Name to assign to rare categories.
     - cat_features: If specified, only apply to these columns.
 
     Raises:
-    - ValueError: If the placeholder value already exists in any of the target columns.
+    - ValueError: If the placeholder value already exists in any of the target columns,
+                 or if threshold is invalid (negative or zero).
 
     Returns:
     - pd.DataFrame: A new DataFrame with rare categories replaced.
     """
+    if threshold <= 0:
+        raise ValueError(f"threshold must be positive, got {threshold}")
+
     df = df.copy()
     columns = (
         cat_features
@@ -171,9 +177,17 @@ def replace_rare_categories(
                 f"The placeholder value '{placeholder}' already exists in column '{col}'."
             )
 
+    # Convert percentage threshold to absolute count if needed
+    if threshold < 1:
+        # Threshold is a percentage
+        absolute_threshold = int(np.ceil(threshold * len(df)))
+    else:
+        # Threshold is already an absolute count
+        absolute_threshold = int(threshold)
+
     for col in columns:
         value_counts = df[col].value_counts()
-        rare_categories = value_counts[value_counts < threshold].index
+        rare_categories = value_counts[value_counts < absolute_threshold].index
         df[col] = df[col].apply(lambda x: placeholder if x in rare_categories else x)
         if df[col].dtype.name != "category":
             df[col] = df[col].astype("category")
