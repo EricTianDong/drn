@@ -11,6 +11,7 @@ def gamma_estimate_dispersion(mu: torch.Tensor, y: torch.Tensor, p: int) -> floa
     """
     n = mu.shape[0]
     dof = n - (p + 1)
+    assert dof > 0, "Degrees of freedom must be positive to estimate dispersion (i.e. need n > p)."
     return (torch.sum((y - mu) ** 2 / mu**2) / dof).item()
 
 
@@ -59,15 +60,18 @@ def estimate_dispersion(distribution: str, mu: torch.Tensor, y: torch.Tensor, p:
     torch.Tensor: The estimated dispersion parameter.
     """
     if distribution == "gamma":
-        return gamma_estimate_dispersion(mu, y, p)
+        disp = gamma_estimate_dispersion(mu, y, p)
     elif distribution == "gaussian":
-        return gaussian_estimate_sigma(mu, y)
+        disp = gaussian_estimate_sigma(mu, y)
     elif distribution == "lognormal":
-        return gaussian_estimate_sigma(mu, y)  # lognormal uses same estimation as gaussian
+        disp = gaussian_estimate_sigma(mu, y)  # lognormal uses same estimation as gaussian
     elif distribution == "inversegaussian":
-        return inversegaussian_estimate_dispersion(mu, y, p)
+        disp = inversegaussian_estimate_dispersion(mu, y, p)
     else:
         raise ValueError(f"Unsupported distribution: {distribution}")
+    
+    assert disp >= 0.0, "Estimated dispersion must be non-negative."
+    return disp
 
 
 def inversegaussian_estimate_dispersion(
