@@ -18,6 +18,19 @@ class InverseGaussian(torch.distributions.Distribution):
     def mean(self) -> torch.Tensor:
         return self.mu
 
+    @property
+    def variance(self) -> torch.Tensor:
+        """
+        Calculate the variance of the Inverse Gaussian distribution.
+
+        For Inverse Gaussian with mean μ and dispersion φ (where φ = 1/λ):
+        Var(X) = μ³ · φ
+
+        Returns:
+            the variance (shape: (batch_shape,))
+        """
+        return self.mu**3 * self.dispersion
+
     def cdf(self, y: torch.Tensor) -> torch.Tensor:
         lambda_ = 1.0 / self.dispersion
 
