@@ -74,7 +74,8 @@ def estimate_dispersion(distribution: str, mu: torch.Tensor, y: torch.Tensor, p:
         disp = inversegaussian_estimate_dispersion(mu, y, p)
     else:
         raise ValueError(f"Unsupported distribution: {distribution}")
-    
+
+    assert torch.isnan(torch.tensor(disp)) == False, "Estimated dispersion is NaN." 
     assert disp >= 0.0, "Estimated dispersion must be non-negative."
     return disp
 
