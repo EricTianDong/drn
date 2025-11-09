@@ -1,5 +1,5 @@
 import torch
-from torch.distributions import Distribution
+from torch.distributions import Distribution, Categorical, Uniform, MixtureSameFamily, Independent
 from ..utils import binary_search_icdf
 
 
@@ -325,6 +325,30 @@ class Histogram(Distribution):
         middle_of_bins = (self.cutpoints[1:] + self.cutpoints[:-1]) / 2
         return torch.sum(self.prob_masses * middle_of_bins, dim=1)
 
+    @property
+    def variance(self) -> torch.Tensor:
+        """
+        Calculate the variance of the distribution.
+
+        For a piecewise uniform distribution, the variance is computed as:
+        Var(X) = E[X²] - E[X]²
+
+        For uniform distribution over [a, b]:
+        E[X²] = (a² + ab + b²) / 3
+
+        Returns:
+            the variance (shape: (batch_shape,))
+        """
+        lower = self.cutpoints[:-1]
+        upper = self.cutpoints[1:]
+
+        # E[X²] for uniform over [a,b] = (a² + ab + b²)/3
+        second_moment_bins = (lower**2 + lower * upper + upper**2) / 3
+        second_moment = torch.sum(self.prob_masses * second_moment_bins, dim=1)
+
+        mean = self.mean
+        return second_moment - mean**2
+
     def icdf(self, p, l=None, u=None, max_iter=1000, tolerance=1e-7) -> torch.Tensor:
         """
         Calculate the inverse CDF (quantiles) using shared binary search implementation.
@@ -342,6 +366,38 @@ class Histogram(Distribution):
             for percentile in percentiles
         ]
         return torch.stack(quantiles, dim=1)[0]
+
+    def sample(self, sample_shape: torch.Size = torch.Size()) -> torch.Tensor:
+        """
+        Sample from the histogram distribution using PyTorch's MixtureSameFamily.
+
+        For each batch element, we:
+        1. Sample which bin to use based on prob_masses (Categorical)
+        2. Sample uniformly within that bin (Uniform)
+
+        Args:
+            sample_shape: The shape of samples to draw
+
+        Returns:
+            Tensor of shape sample_shape + batch_shape
+        """
+        # Create categorical distribution for bin selection
+        # prob_masses has shape (batch_size, num_regions)
+        mix = Categorical(probs=self.prob_masses)
+
+        # Create uniform distributions for each bin
+        # Need to expand cutpoints to shape (batch_size, num_regions)
+        lower = self.cutpoints[:-1].unsqueeze(0).expand(self.batch_shape[0], -1)
+        upper = self.cutpoints[1:].unsqueeze(0).expand(self.batch_shape[0], -1)
+
+        # Create batch of Uniform distributions with batch_shape=(batch_size, num_regions)
+        comp = Uniform(lower, upper)
+
+        # Create mixture distribution
+        mixture = MixtureSameFamily(mix, comp)
+
+        # Sample from the mixture
+        return mixture.sample(sample_shape)
 
     def __repr__(self):
         return f"{self.__class__.__name__}(cutpoints: {self.cutpoints.shape}, prob_masses: {self.prob_masses.shape})"
