@@ -1,17 +1,24 @@
 import torch
+import warnings
 
 
-def gamma_estimate_dispersion(mu: torch.Tensor, y: torch.Tensor, p: int) -> float:
+def gamma_estimate_dispersion(mu: torch.Tensor, y: torch.Tensor, p: int, unbiased: bool = True) -> float:
     """
     For a gamma GLM, the dispersion parameter is estimated using the method of moments.
     Args:
         mu: the predicted means for the gamma distributions (shape: (n, 1))
         y: the observed values (shape: (n, 1))
         p: the number of features (not including the intercept)
+        unbiased: whether to use degrees of freedom correction for unbiased estimate
     """
     n = mu.shape[0]
-    dof = n - (p + 1)
-    assert dof > 0, "Degrees of freedom must be positive to estimate dispersion (i.e. need n > p)."
+    if unbiased and n <= p:
+        warnings.warn(
+            f"Unbiased dispersion estimation requested but insufficient degrees of freedom: "
+            f"n={n} <= p={p}. Using biased estimate (dividing by n instead of n-p-1).",
+            UserWarning
+        )
+    dof = n - (p + 1) if (unbiased and n - (p + 1) > 0) else n
 
     # We want to estimate dispersion = (torch.sum((y - mu) ** 2 / mu**2) / dof).item()
     # however, if y or mu is large then (y - mu) ** 2 can become infinite leading to NaN dispersion.
@@ -38,20 +45,31 @@ def gamma_convert_parameters(
     return alpha, beta
 
 
-def gaussian_estimate_sigma(mu: torch.Tensor, y: torch.Tensor) -> float:
+def gaussian_estimate_sigma(mu: torch.Tensor, y: torch.Tensor, p: int, unbiased: bool = True) -> float:
     """
     For a Gaussian GLM, the dispersion parameter is estimated using the method of moments.
     Args:
         mu: the predicted means for the Gaussian distributions (shape: (n, 1))
         y: the observed values (shape: (n, 1))
-        p: the number of features
+        p: the number of features (not including the intercept)
+        unbiased: whether to use degrees of freedom correction for unbiased estimate
     """
     n = mu.shape[0]
-    variance_estimate = torch.sum((y - mu) ** 2) / (n - 1)
+    if unbiased and n <= p:
+        warnings.warn(
+            f"Unbiased sigma estimation requested but insufficient degrees of freedom: "
+            f"n={n} <= p={p}. Using biased estimate (dividing by n instead of n-p-1).",
+            UserWarning
+        )
+    dof = n - (p + 1) if (unbiased and n - (p + 1) > 0) else n
+
+    # Numerically stable calculation: use mean then scale by n/dof to avoid large sums
+    r = y - mu
+    variance_estimate = r.square().mean() * (n / dof)
     return (torch.sqrt(variance_estimate)).item()
 
 
-def estimate_dispersion(distribution: str, mu: torch.Tensor, y: torch.Tensor, p: int):
+def estimate_dispersion(distribution: str, mu: torch.Tensor, y: torch.Tensor, p: int, unbiased=True):
     """
     Estimate the dispersion parameter for different distributions.
 
@@ -65,13 +83,13 @@ def estimate_dispersion(distribution: str, mu: torch.Tensor, y: torch.Tensor, p:
     torch.Tensor: The estimated dispersion parameter.
     """
     if distribution == "gamma":
-        disp = gamma_estimate_dispersion(mu, y, p)
+        disp = gamma_estimate_dispersion(mu, y, p, unbiased=unbiased)
     elif distribution == "gaussian":
-        disp = gaussian_estimate_sigma(mu, y)
+        disp = gaussian_estimate_sigma(mu, y, p, unbiased=unbiased)
     elif distribution == "lognormal":
-        disp = gaussian_estimate_sigma(mu, y)  # lognormal uses same estimation as gaussian
+        disp = gaussian_estimate_sigma(mu, y, p, unbiased=unbiased)  # lognormal uses same estimation as gaussian
     elif distribution == "inversegaussian":
-        disp = inversegaussian_estimate_dispersion(mu, y, p)
+        disp = inversegaussian_estimate_dispersion(mu, y, p, unbiased=unbiased)
     else:
         raise ValueError(f"Unsupported distribution: {distribution}")
 
@@ -81,8 +99,26 @@ def estimate_dispersion(distribution: str, mu: torch.Tensor, y: torch.Tensor, p:
 
 
 def inversegaussian_estimate_dispersion(
-    mu: torch.Tensor, y: torch.Tensor, p: int
+    mu: torch.Tensor, y: torch.Tensor, p: int, unbiased: bool = True
 ) -> float:
+    """
+    For an inverse Gaussian GLM, the dispersion parameter is estimated using the method of moments.
+    Args:
+        mu: the predicted means for the inverse Gaussian distributions (shape: (n, 1))
+        y: the observed values (shape: (n, 1))
+        p: the number of features (not including the intercept)
+        unbiased: whether to use degrees of freedom correction for unbiased estimate
+    """
     n = mu.shape[0]
-    dof = n - (p + 1)
-    return (torch.sum(((y - mu) ** 2) / (mu**3)) / dof).item()
+    if unbiased and n <= p:
+        warnings.warn(
+            f"Unbiased dispersion estimation requested but insufficient degrees of freedom: "
+            f"n={n} <= p={p}. Using biased estimate (dividing by n instead of n-p-1).",
+            UserWarning
+        )
+    dof = n - (p + 1) if (unbiased and n - (p + 1) > 0) else n
+
+    # Numerically stable calculation: rewrite (y - mu)^2 / mu^3 = ((y - mu) / mu)^2 / mu
+    r = y / mu - 1.0
+    phi = (r.square() / mu).mean() * (n / dof)
+    return phi.item()
