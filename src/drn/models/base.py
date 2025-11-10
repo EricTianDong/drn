@@ -110,7 +110,12 @@ class BaseModel(L.LightningModule, abc.ABC):
         trainer_kwargs["enable_checkpointing"] = True
 
         # Validation: checkpointing + early stopping
-        with tempfile.TemporaryDirectory() as tmpdir:
+        # OPTIMIZATION: Use local .tmp directory instead of system temp for better I/O performance
+        local_tmpdir = Path(".tmp_checkpoints")
+        local_tmpdir.mkdir(exist_ok=True)
+
+        with tempfile.TemporaryDirectory(dir=local_tmpdir) as tmpdir:
+            # OPTIMIZATION: Reduce checkpoint frequency - only save on validation, not training
             ckpt_cb = ModelCheckpoint(
                 dirpath=tmpdir,
                 filename="best",
