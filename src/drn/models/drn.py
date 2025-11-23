@@ -30,6 +30,7 @@ class DRN(BaseModel):
         kl_direction="forwards",
         learning_rate=1e-3,
         debug=False,
+        baseline_min_prob_mass=1e-10,
     ):
         """
         Args:
@@ -77,6 +78,7 @@ class DRN(BaseModel):
         self.dv_alpha = dv_alpha
         self.kl_direction = kl_direction
         self.learning_rate = learning_rate
+        self.baseline_min_prob_mass = baseline_min_prob_mass
         self.debug = debug
 
     def fit(self, X_train, y_train, *args, **kwargs) -> DRN:
@@ -132,7 +134,9 @@ class DRN(BaseModel):
             # DRN cannot adjust regions with 0 probability, so we ensure 0's become
             # an incredibly small number just to avoid this issue.
             mass = torch.sum(baseline_probs, dim=1, keepdim=True)
-            baseline_probs = torch.clip(baseline_probs, min=1e-10, max=1.0)
+            baseline_probs = torch.clip(
+                baseline_probs, min=self.baseline_min_prob_mass, max=1.0
+            )
             baseline_probs = (
                 baseline_probs / torch.sum(baseline_probs, dim=1, keepdim=True) * mass
             )
