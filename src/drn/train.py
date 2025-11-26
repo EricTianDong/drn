@@ -83,6 +83,7 @@ def train(
 
         range_selection = trange if print_details else range
         for epoch in range_selection(1, epochs + 1):
+            epochs_run = epoch + 1
             model.train()
 
             for data, target in train_loader:
@@ -145,6 +146,8 @@ def train(
         if keep_best:
             # If requested, return tbe best model found during training.
             model.load_state_dict(best_model)
+        
+        model.epochs_trained = epochs_run
 
         # Make sure dropout is always disabled after training
         model.eval()

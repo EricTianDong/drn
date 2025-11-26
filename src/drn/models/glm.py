@@ -93,6 +93,7 @@ class GLM(BaseModel):
             disp = (results.scale**0.5).item()
 
         self.dispersion = nn.Parameter(torch.Tensor([disp]), requires_grad=False)
+        self.epochs_trained = None # Epochs not applicable
         return self
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

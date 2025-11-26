@@ -82,6 +82,8 @@ class BaseModel(L.LightningModule, abc.ABC):
             trainer_kwargs.setdefault("enable_checkpointing", False)
             trainer = L.Trainer(**trainer_kwargs)
             trainer.fit(self, train_loader)
+            # Record epochs run
+            self.epochs_trained = int(getattr(trainer, "current_epoch", 0))
             self.eval()
             return self
 
@@ -130,6 +132,9 @@ class BaseModel(L.LightningModule, abc.ABC):
                 )
                 state = ckpt.get("state_dict", ckpt)
                 self.load_state_dict(state)
+            
+            # Record epochs actually run
+            self.epochs_trained = int(getattr(trainer, "current_epoch", 0))
 
         self.eval()
         return self
