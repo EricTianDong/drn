@@ -11,6 +11,7 @@ import lightning as L
 from torch.utils.data import DataLoader, TensorDataset
 from lightning.pytorch.callbacks import ModelCheckpoint, EarlyStopping
 
+
 from lightning.pytorch.utilities import disable_possible_user_warnings
 from ..utils import binary_search_icdf
 
@@ -130,11 +131,10 @@ class BaseModel(L.LightningModule, abc.ABC):
                 ckpt = torch.load(
                     best_path, map_location=lambda s, loc: s, weights_only=False
                 )
+                # Set epochs_trained to be the optimal number of epochs (pre-patience)
+                self.epochs_trained = ckpt["epoch"] + 1
                 state = ckpt.get("state_dict", ckpt)
                 self.load_state_dict(state)
-            
-            # Record epochs actually run
-            self.epochs_trained = int(getattr(trainer, "current_epoch", 0))
 
         self.eval()
         return self
