@@ -133,15 +133,11 @@ class DRN(BaseModel):
             # Sometimes the GLM probabilities are 0 simply due to numerical problems.
             # DRN cannot adjust regions with 0 probability, so we ensure 0's become
             # an incredibly small number just to avoid this issue.
-            mass = torch.sum(baseline_probs, dim=1, keepdim=True)
-            baseline_probs = torch.clip(
+            safe_baseline_probs = torch.clip(
                 baseline_probs, min=self.baseline_min_prob_mass, max=1.0
             )
-            baseline_probs = (
-                baseline_probs / torch.sum(baseline_probs, dim=1, keepdim=True) * mass
-            )
 
-        drn_logits = torch.log(baseline_probs) + self.log_adjustments(x)
+        drn_logits = torch.log(safe_baseline_probs) + self.log_adjustments(x)
         drn_pmf = torch.softmax(drn_logits, dim=1)
 
         if self.debug:
@@ -152,7 +148,7 @@ class DRN(BaseModel):
                 torch.sum(drn_pmf, dim=1), torch.ones(x.shape[0], device=x.device)
             )
 
-        return baseline_dists, self.cutpoints, baseline_probs, drn_pmf
+        return baseline_dists, self.cutpoints, safe_baseline_probs, drn_pmf
 
     def _predict(self, x: torch.Tensor) -> ExtendedHistogram:
         baseline_dists, cutpoints, baseline_probs, drn_pmf = self(x)
