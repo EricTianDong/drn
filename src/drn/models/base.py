@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import torch
 import lightning as L
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, TensorDataset, Sampler
 from lightning.pytorch.callbacks import ModelCheckpoint, EarlyStopping
 
 
@@ -59,6 +59,7 @@ class BaseModel(L.LightningModule, abc.ABC):
         batch_size: int = 128,
         epochs: int = 10,
         patience: int = 5,
+        sampler: Optional[Sampler] = None,
         **trainer_kwargs,
     ) -> BaseModel:
         # Set some default trainer arguments
@@ -76,7 +77,10 @@ class BaseModel(L.LightningModule, abc.ABC):
         train_tensor = TensorDataset(
             self.preprocess(X_train), self.preprocess(y_train, targets=True).squeeze()
         )
-        train_loader = DataLoader(train_tensor, batch_size=batch_size, shuffle=True)
+        if sampler is not None:
+            train_loader = DataLoader(train_tensor, batch_size=batch_size, sampler=sampler)
+        else:
+            train_loader = DataLoader(train_tensor, batch_size=batch_size, shuffle=True)
 
         # Simple train if no validation provided
         if not has_val:
