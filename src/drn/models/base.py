@@ -60,6 +60,7 @@ class BaseModel(L.LightningModule, abc.ABC):
         epochs: int = 10,
         patience: int = 5,
         sampler: Optional[Sampler] = None,
+        train_loss_patience: Optional[int] = None, # only really to be used when has_val is not none
         **trainer_kwargs,
     ) -> BaseModel:
         # Set some default trainer arguments
@@ -82,13 +83,50 @@ class BaseModel(L.LightningModule, abc.ABC):
         else:
             train_loader = DataLoader(train_tensor, batch_size=batch_size, shuffle=True)
 
-        # Simple train if no validation provided
         if not has_val:
-            trainer_kwargs.setdefault("enable_checkpointing", False)
-            trainer = L.Trainer(**trainer_kwargs)
-            trainer.fit(self, train_loader)
-            # Record epochs run
-            self.epochs_trained = int(getattr(trainer, "current_epoch", 0))
+            if train_loss_patience is not None:
+                print("USING TRAIN LOSS PATIENCE:", train_loss_patience)
+                train_early_cb = EarlyStopping(
+                    monitor='train_loss',
+                    mode='min',
+                    patience=train_loss_patience,
+                    verbose=False
+                )
+                callbacks = [train_early_cb]
+
+                local_tmpdir = Path(".tmp_checkpoints")
+                local_tmpdir.mkdir(exist_ok=True)
+                
+                with tempfile.TemporaryDirectory(dir=local_tmpdir) as tmpdir:
+                    ckpt_cb = ModelCheckpoint(
+                        dirpath=tmpdir,
+                        filename="best_train",
+                        save_top_k=1,
+                        monitor="train_loss",
+                        mode="min",
+                        save_on_train_epoch_end=True,
+                    )
+                    callbacks.append(ckpt_cb)
+                    
+                    trainer = L.Trainer(callbacks=callbacks, **trainer_kwargs)
+                    trainer.fit(self, train_loader)
+                    
+                    # Restore best weights and get correct epoch
+                    best_path = ckpt_cb.best_model_path
+                    if best_path:
+                        ckpt = torch.load(best_path, map_location=lambda s, loc: s, weights_only=False)
+                        self.epochs_trained = ckpt["epoch"] + 1
+                        state = ckpt.get("state_dict", ckpt)
+                        self.load_state_dict(state)
+                    else:
+                        self.epochs_trained = trainer.current_epoch + 1
+            else:
+                # No early stopping, original behavior
+                trainer_kwargs.setdefault("enable_checkpointing", False)
+                trainer = L.Trainer(**trainer_kwargs)
+                trainer.fit(self, train_loader)
+                self.epochs_trained = int(getattr(trainer, "current_epoch", 0))
+            
             self.eval()
             return self
 
