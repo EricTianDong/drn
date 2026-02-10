@@ -78,7 +78,9 @@ class BaseModel(L.LightningModule, abc.ABC):
             self.preprocess(X_train), self.preprocess(y_train, targets=True).squeeze()
         )
         if sampler is not None:
-            train_loader = DataLoader(train_tensor, batch_size=batch_size, sampler=sampler)
+            train_loader = DataLoader(
+                train_tensor, batch_size=batch_size, sampler=sampler
+            )
         else:
             train_loader = DataLoader(train_tensor, batch_size=batch_size, shuffle=True)
 
@@ -108,7 +110,7 @@ class BaseModel(L.LightningModule, abc.ABC):
         trainer_kwargs["enable_checkpointing"] = True
 
         # Validation: checkpointing + early stopping
-	with tempfile.TemporaryDirectory() as tmpdir:
+        with tempfile.TemporaryDirectory() as tmpdir:
             ckpt_cb = ModelCheckpoint(
                 dirpath=tmpdir,
                 filename="best",
