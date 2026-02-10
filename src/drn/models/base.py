@@ -1,14 +1,16 @@
 from __future__ import annotations
 import abc
 import tempfile
+from pathlib import Path
 from typing import Any, Optional, Union
 import warnings
 import numpy as np
 import pandas as pd
 import torch
 import lightning as L
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, TensorDataset, Sampler
 from lightning.pytorch.callbacks import ModelCheckpoint, EarlyStopping
+
 
 from lightning.pytorch.utilities import disable_possible_user_warnings
 from ..utils import binary_search_icdf
@@ -57,6 +59,7 @@ class BaseModel(L.LightningModule, abc.ABC):
         batch_size: int = 128,
         epochs: int = 10,
         patience: int = 5,
+        sampler: Optional[Sampler] = None,
         **trainer_kwargs,
     ) -> BaseModel:
         # Set some default trainer arguments
@@ -74,13 +77,20 @@ class BaseModel(L.LightningModule, abc.ABC):
         train_tensor = TensorDataset(
             self.preprocess(X_train), self.preprocess(y_train, targets=True).squeeze()
         )
-        train_loader = DataLoader(train_tensor, batch_size=batch_size, shuffle=True)
+        if sampler is not None:
+            train_loader = DataLoader(
+                train_tensor, batch_size=batch_size, sampler=sampler
+            )
+        else:
+            train_loader = DataLoader(train_tensor, batch_size=batch_size, shuffle=True)
 
         # Simple train if no validation provided
         if not has_val:
             trainer_kwargs.setdefault("enable_checkpointing", False)
             trainer = L.Trainer(**trainer_kwargs)
             trainer.fit(self, train_loader)
+            # Record epochs run
+            self.epochs_trained = int(getattr(trainer, "current_epoch", 0))
             self.eval()
             return self
 
@@ -107,6 +117,7 @@ class BaseModel(L.LightningModule, abc.ABC):
                 save_top_k=1,
                 monitor="val_loss",
                 mode="min",
+                save_on_train_epoch_end=False,  # Only save on validation, not every training epoch
             )
             early_cb = EarlyStopping(
                 monitor="val_loss", mode="min", patience=patience, verbose=False
@@ -121,6 +132,8 @@ class BaseModel(L.LightningModule, abc.ABC):
                 ckpt = torch.load(
                     best_path, map_location=lambda s, loc: s, weights_only=False
                 )
+                # Set epochs_trained to be the optimal number of epochs (pre-patience)
+                self.epochs_trained = ckpt["epoch"] + 1
                 state = ckpt.get("state_dict", ckpt)
                 self.load_state_dict(state)
 

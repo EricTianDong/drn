@@ -19,12 +19,20 @@ from drn import GLM, DRN
 import pandas as pd
 import numpy as np
 
-# Load your data (pandas/numpy)
+# Generate sample data (pandas/numpy)
+np.random.seed(42)
+n_samples = 50
+
 X_train = pd.DataFrame({
-    'age': [25, 35, 45, 55, 30],
-    'income': [30000, 50000, 70000, 90000, 45000]
+    'age': np.random.randint(20, 70, n_samples),
+    'income': np.random.randint(20000, 100000, n_samples)
 })
-y_train = pd.Series([1200, 1800, 2400, 3000, 1500])
+# Generate target with some relationship to features
+y_train = pd.Series(
+    800 + 20 * (X_train['age'] - 40) + 0.01 * X_train['income'] + np.random.normal(0, 200, n_samples)
+)
+# Ensure positive values (e.g., for insurance claims or sales)
+y_train = y_train.clip(lower=100)
 
 # 1. Train baseline model (GLM handles data conversion internally)
 baseline = GLM('gamma')  # Good for positive targets like insurance claims
@@ -35,7 +43,7 @@ drn_model = DRN(baseline)
 drn_model.fit(X_train, y_train)
 
 # 3. Make predictions (returns distribution objects)
-predictions = drn_model.predict(X_train)
+predictions = drn_model.predict(X_train[:5])  # Predict first 5 samples
 mean_predictions = predictions.mean
 quantiles = predictions.quantiles([10, 50, 90])
 

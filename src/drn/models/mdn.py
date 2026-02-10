@@ -69,15 +69,15 @@ class MDN(BaseModel):
             A list containing the mixture weights, and distribution-specific parameters.
         """
         x = self.hidden_layers(x)
-        weights = torch.softmax(self.logits(x), dim=1)
+        weights = torch.softmax(self.logits(x), dim=1) + 1e-9
 
         if self.distribution == "gamma":
-            alphas = torch.exp(self.log_alpha(x))
-            betas = torch.exp(self.log_beta(x))
+            alphas = torch.exp(self.log_alpha(x)) + 1e-6
+            betas = torch.exp(self.log_beta(x)) + 1e-6
             return [weights, alphas, betas]
         else:
             mus = self.mu(x)
-            sigmas = nn.Softplus()(self.pre_sigma(x))  # Ensure sigma is positive
+            sigmas = nn.Softplus()(self.pre_sigma(x)) + 1e-6 # Ensure sigma is positive
             return [weights, mus, sigmas]
 
     def _predict(self, x: torch.Tensor) -> MixtureSameFamily:
