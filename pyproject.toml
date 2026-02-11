@@ -12,7 +12,6 @@ dependencies = [
     "pandas",
     "scikit-learn",
     "seaborn",
-    "shap",
     "statsmodels",
     "torch",
     "tqdm"
@@ -33,4 +32,5 @@ classifiers=[
 ]
 
 [project.optional-dependencies]
+shap = ["shap"]
 dev = ["black", "ipykernel", "isort", "jupytext", "mypy", "pre-commit", "pytest"]

@@ -2,7 +2,11 @@
 from .models import *
 from .distributions import *
 from .interpretability import DRNExplainer
-from .kernel_shap_explainer import KernelSHAP_DRN
+
+try:
+    from .kernel_shap_explainer import KernelSHAP_DRN
+except ImportError:
+    pass
 from .train import train
 from .metrics import crps, quantile_score, quantile_losses, rmse
 from .utils import (
@@ -20,7 +24,6 @@ __all__ = [
     *_models_all,
     *_dist_all,
     "DRNExplainer",
-    "KernelSHAP_DRN",
     "crps",
     "preprocess_data",
     "replace_rare_categories",

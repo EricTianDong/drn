@@ -13,7 +13,10 @@ from sklearn.compose import ColumnTransformer
 
 from .models.glm import GLM
 from .models.drn import DRN
-from .kernel_shap_explainer import KernelSHAP_DRN
+try:
+    from .kernel_shap_explainer import KernelSHAP_DRN
+except ImportError:
+    pass
 
 from sklearn.preprocessing import FunctionTransformer
 
