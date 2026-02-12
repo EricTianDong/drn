@@ -112,12 +112,57 @@ def _funnel_hidden_sizes(
     return result
 
 
+_MAX_AUTO_LAYERS = 100
+
+
+def _sizes_for_shape(
+    total_params: int, input_dim: int, output_dim: int, num_layers: int, shape: str
+) -> list[int]:
+    """Compute hidden sizes for a given shape and explicit num_layers."""
+    if shape == "rectangular":
+        h = _rectangular_hidden_size(total_params, input_dim, output_dim, num_layers)
+        return [h] * num_layers
+    elif shape == "funnel":
+        return _funnel_hidden_sizes(total_params, input_dim, output_dim, num_layers)
+    else:
+        raise ValueError(f"Unknown shape: {shape!r}. Expected 'rectangular' or 'funnel'.")
+
+
+def _auto_select_layers(
+    total_params: int, input_dim: int, output_dim: int, shape: str
+) -> list[int]:
+    """Pick the deepest architecture whose last hidden layer >= output_dim.
+
+    Tries 1, 2, … up to ``_MAX_AUTO_LAYERS`` hidden layers.  As depth
+    increases the per-layer width shrinks, so the last hidden layer eventually
+    drops below ``output_dim`` — at which point we stop and return the
+    previous (deepest valid) architecture.
+    """
+    best = None
+    for L in range(1, _MAX_AUTO_LAYERS + 1):
+        try:
+            sizes = _sizes_for_shape(total_params, input_dim, output_dim, L, shape)
+        except ValueError:
+            break  # budget too small for this many layers
+        if sizes[-1] >= output_dim:
+            best = sizes
+        else:
+            break  # more layers will only shrink sizes further
+    if best is None:
+        raise ValueError(
+            f"total_params={total_params} is too small to fit even 1 hidden layer "
+            f"with last_hidden >= output_dim={output_dim} "
+            f"(input_dim={input_dim})"
+        )
+    return best
+
+
 def compute_hidden_sizes(
     total_params: int,
     input_dim: int,
     output_dim: int,
-    num_layers: int,
-    shape: str = "rectangular",
+    num_layers: int | None = None,
+    shape: str = "funnel",
 ) -> list[int]:
     """Convert a total parameter budget into concrete hidden layer sizes.
 
@@ -125,7 +170,9 @@ def compute_hidden_sizes(
         total_params: Target number of trainable parameters (weights + biases).
         input_dim: Number of input features.
         output_dim: Number of output neurons.
-        num_layers: Number of hidden layers.
+        num_layers: Number of hidden layers.  When ``None`` the depth is
+            chosen automatically — the deepest architecture (up to 5 layers)
+            whose last hidden layer is at least as wide as ``output_dim``.
         shape: ``"rectangular"`` (uniform width) or ``"funnel"`` (tapering).
 
     Returns:
@@ -134,15 +181,13 @@ def compute_hidden_sizes(
     Raises:
         ValueError: If the budget is too small or the shape is unknown.
     """
-    if num_layers < 1:
-        raise ValueError("num_layers must be >= 1")
     if total_params < 1:
         raise ValueError("total_params must be >= 1")
 
-    if shape == "rectangular":
-        h = _rectangular_hidden_size(total_params, input_dim, output_dim, num_layers)
-        return [h] * num_layers
-    elif shape == "funnel":
-        return _funnel_hidden_sizes(total_params, input_dim, output_dim, num_layers)
-    else:
-        raise ValueError(f"Unknown shape: {shape!r}. Expected 'rectangular' or 'funnel'.")
+    if num_layers is None:
+        return _auto_select_layers(total_params, input_dim, output_dim, shape)
+
+    if num_layers < 1:
+        raise ValueError("num_layers must be >= 1")
+
+    return _sizes_for_shape(total_params, input_dim, output_dim, num_layers, shape)

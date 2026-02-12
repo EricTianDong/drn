@@ -173,6 +173,72 @@ class TestDispatcher:
             )
 
 
+# ---------- auto layer selection (num_layers=None) ----------
+
+class TestAutoLayerSelection:
+    def test_last_hidden_ge_output_dim(self):
+        """Auto-selected architecture must have last hidden >= output_dim."""
+        for total_params in [1000, 5000, 10000, 50000]:
+            sizes = compute_hidden_sizes(
+                total_params=total_params, input_dim=20, output_dim=15
+            )
+            assert sizes[-1] >= 15, f"last hidden {sizes[-1]} < output_dim 15 for {total_params} params"
+
+    def test_prefers_deeper(self):
+        """With more params, should be able to afford more layers."""
+        small = compute_hidden_sizes(total_params=500, input_dim=10, output_dim=5)
+        large = compute_hidden_sizes(total_params=50000, input_dim=10, output_dim=5)
+        assert len(large) >= len(small)
+
+    def test_adding_one_more_layer_would_violate_constraint(self):
+        """The next deeper architecture should have last_hidden < output_dim."""
+        output_dim = 15
+        sizes = compute_hidden_sizes(
+            total_params=5000, input_dim=20, output_dim=output_dim
+        )
+        L = len(sizes)
+        if L < 5:  # only testable if we didn't hit the cap
+            try:
+                deeper = compute_hidden_sizes(
+                    total_params=5000, input_dim=20, output_dim=output_dim, num_layers=L + 1
+                )
+                assert deeper[-1] < output_dim
+            except ValueError:
+                pass  # also fine — budget too small
+
+    def test_within_budget(self):
+        sizes = compute_hidden_sizes(total_params=10000, input_dim=20, output_dim=15)
+        assert count_params(20, sizes, 15) <= 10000
+
+    def test_large_input_dim_fewer_layers(self):
+        """With many features and modest budget, should pick fewer layers."""
+        sizes = compute_hidden_sizes(total_params=5000, input_dim=300, output_dim=15)
+        # Most params consumed by input→first hidden, so few layers expected
+        assert len(sizes) <= 3
+
+    def test_small_budget_raises(self):
+        """Budget too small for even 1 layer with last_hidden >= output_dim."""
+        with pytest.raises(ValueError, match="too small"):
+            compute_hidden_sizes(total_params=10, input_dim=100, output_dim=50)
+
+    def test_rectangular_auto(self):
+        """Auto-selection also works with rectangular shape."""
+        sizes = compute_hidden_sizes(
+            total_params=10000, input_dim=10, output_dim=5, shape="rectangular"
+        )
+        assert all(s == sizes[0] for s in sizes)
+        assert sizes[-1] >= 5
+        assert count_params(10, sizes, 5) <= 10000
+
+    def test_funnel_auto_decreasing(self):
+        """Auto-selected funnel should have non-increasing layer widths."""
+        sizes = compute_hidden_sizes(
+            total_params=10000, input_dim=20, output_dim=15, shape="funnel"
+        )
+        for i in range(len(sizes) - 1):
+            assert sizes[i] >= sizes[i + 1]
+
+
 # ---------- count_params vs actual MDN models ----------
 
 class TestCountParamsMatchesMDN:
