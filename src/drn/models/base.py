@@ -1,5 +1,6 @@
 from __future__ import annotations
 import abc
+import math
 import tempfile
 from pathlib import Path
 from typing import Any, Optional, Union
@@ -48,7 +49,38 @@ class BaseModel(L.LightningModule, abc.ABC):
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
-        return {"optimizer": optimizer}
+
+        sched_type = getattr(self, "_lr_scheduler", None)
+        if not sched_type:
+            return {"optimizer": optimizer}
+
+        if sched_type == "cosine_warmup":
+            max_epochs = self._max_epochs
+            warmup_epochs = max(1, int(max_epochs * self._lr_warmup_fraction))
+
+            def lr_lambda(epoch):
+                if epoch < warmup_epochs:
+                    return (epoch + 1) / warmup_epochs
+                progress = (epoch - warmup_epochs) / max(1, max_epochs - warmup_epochs)
+                return 0.5 * (1 + math.cos(math.pi * progress))
+
+            scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+            return {
+                "optimizer": optimizer,
+                "lr_scheduler": {"scheduler": scheduler, "interval": "epoch"},
+            }
+
+        if sched_type == "plateau":
+            monitor = "val_loss" if getattr(self, "_has_val", True) else "train_loss"
+            scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+                optimizer, mode="min", factor=0.5, patience=self._plateau_patience,
+            )
+            return {
+                "optimizer": optimizer,
+                "lr_scheduler": {"scheduler": scheduler, "monitor": monitor},
+            }
+
+        raise ValueError(f"Unknown lr_scheduler: {sched_type!r}")
 
     def fit(
         self,
@@ -71,7 +103,19 @@ class BaseModel(L.LightningModule, abc.ABC):
         trainer_kwargs.setdefault("enable_progress_bar", True)
         trainer_kwargs.setdefault("enable_model_summary", True)
 
+        # Pop scheduler kwargs before they reach L.Trainer
+        lr_scheduler = trainer_kwargs.pop("lr_scheduler", None)
+        lr_warmup_fraction = trainer_kwargs.pop("lr_warmup_fraction", 0.1)
+        plateau_patience = trainer_kwargs.pop("plateau_patience", max(1, patience // 2))
+
         has_val = X_val is not None and y_val is not None
+
+        # Store for configure_optimizers() (called during trainer.fit())
+        self._lr_scheduler = lr_scheduler
+        self._lr_warmup_fraction = lr_warmup_fraction
+        self._max_epochs = trainer_kwargs["max_epochs"]
+        self._has_val = has_val
+        self._plateau_patience = plateau_patience
 
         # Build training DataLoader
         train_tensor = TensorDataset(
