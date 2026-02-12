@@ -17,7 +17,7 @@ class DRN(BaseModel):
         cutpoints: Optional[list[float]] = None,
         ct=None,
         num_hidden_layers=2,
-        hidden_size=75,
+        hidden_size: int | list[int] = 75,
         dropout_rate=0.2,
         baseline_start=False,
         proportion=0.1,
@@ -37,7 +37,9 @@ class DRN(BaseModel):
             glm: A Generalized Linear Model (GLM) that DRN will adjust.
             cutpoints: Cutpoints for the DRN model.
             num_hidden_layers: Number of hidden layers in the DRN network.
-            hidden_size: Number of neurons in each hidden layer.
+            hidden_size: either a single int (uniform width, repeated for
+                num_hidden_layers) or a list of ints (explicit per-layer widths,
+                num_hidden_layers is ignored).
         """
         self.save_hyperparameters()
         super(DRN, self).__init__()
@@ -47,17 +49,25 @@ class DRN(BaseModel):
         for param in self.glm.parameters():
             param.requires_grad = False
 
-        layers = [nn.LazyLinear(hidden_size), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for _ in range(num_hidden_layers - 1):
-            layers.append(nn.Linear(hidden_size, hidden_size))
+        # Resolve hidden layer sizes
+        if isinstance(hidden_size, list):
+            sizes = hidden_size
+        else:
+            sizes = [hidden_size] * num_hidden_layers
+
+        layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
+        for i in range(1, len(sizes)):
+            layers.append(nn.Linear(sizes[i - 1], sizes[i]))
             layers.append(nn.LeakyReLU())
             layers.append(nn.Dropout(dropout_rate))
 
         self.hidden_layers = nn.Sequential(*layers)
 
+        last_hidden = sizes[-1]
+
         if cutpoints is not None:
             self.cutpoints = nn.Parameter(torch.Tensor(cutpoints), requires_grad=False)
-            self.fc_output = nn.Linear(hidden_size, len(self.cutpoints) - 1)
+            self.fc_output = nn.Linear(last_hidden, len(self.cutpoints) - 1)
             # Initialize weights and biases for fc_output to zero
             if baseline_start:
                 nn.init.constant_(self.fc_output.weight, 0)
@@ -66,7 +76,7 @@ class DRN(BaseModel):
         else:
             self.cutpoints = None
             self.fc_output = None
-            self.hidden_size = hidden_size
+            self.hidden_size = last_hidden
             self.proportion = proportion
             self.min_obs = min_obs
             self.baseline_start = baseline_start

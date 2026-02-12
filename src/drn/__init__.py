@@ -1,6 +1,7 @@
 # __init__.py for drn package
 from .models import *
 from .distributions import *
+from .architecture import compute_hidden_sizes, count_params
 from .interpretability import DRNExplainer
 
 try:
@@ -24,6 +25,8 @@ __all__ = [
     *_models_all,
     *_dist_all,
     "DRNExplainer",
+    "compute_hidden_sizes",
+    "count_params",
     "crps",
     "preprocess_data",
     "replace_rare_categories",

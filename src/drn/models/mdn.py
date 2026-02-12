@@ -20,7 +20,7 @@ class MDN(BaseModel):
         distribution="gamma",
         num_hidden_layers=2,
         num_components=5,
-        hidden_size=100,
+        hidden_size: int | list[int] = 100,
         dropout_rate=0.2,
         learning_rate=1e-3,
     ):
@@ -29,7 +29,9 @@ class MDN(BaseModel):
             p: the number of features in the model.
             num_hidden_layers: the number of hidden layers in the network.
             num_components: the number of components in the mixture.
-            hidden_size: the number of neurons in each hidden layer.
+            hidden_size: either a single int (uniform width, repeated for
+                num_hidden_layers) or a list of ints (explicit per-layer widths,
+                num_hidden_layers is ignored).
             distribution: the type of distribution for the MDN ('gamma' or 'gaussian').
         """
         self.save_hyperparameters()
@@ -37,23 +39,31 @@ class MDN(BaseModel):
         self.num_components = num_components
         self.distribution = distribution
 
-        layers = [nn.LazyLinear(hidden_size), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for _ in range(num_hidden_layers - 1):
+        # Resolve hidden layer sizes
+        if isinstance(hidden_size, list):
+            sizes = hidden_size
+        else:
+            sizes = [hidden_size] * num_hidden_layers
+
+        layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
+        for i in range(1, len(sizes)):
             layers += [
-                nn.Linear(hidden_size, hidden_size),
+                nn.Linear(sizes[i - 1], sizes[i]),
                 nn.LeakyReLU(),
                 nn.Dropout(dropout_rate),
             ]
         self.hidden_layers = nn.Sequential(*layers)
 
+        last_hidden = sizes[-1]
+
         # Output layers for mixture parameters
-        self.logits = nn.Linear(hidden_size, num_components)
+        self.logits = nn.Linear(last_hidden, num_components)
         if distribution == "gamma":
-            self.log_alpha = nn.Linear(hidden_size, num_components)
-            self.log_beta = nn.Linear(hidden_size, num_components)
+            self.log_alpha = nn.Linear(last_hidden, num_components)
+            self.log_beta = nn.Linear(last_hidden, num_components)
         elif distribution == "gaussian":
-            self.mu = nn.Linear(hidden_size, num_components)
-            self.pre_sigma = nn.Linear(hidden_size, num_components)
+            self.mu = nn.Linear(last_hidden, num_components)
+            self.pre_sigma = nn.Linear(last_hidden, num_components)
         else:
             raise ValueError("Unsupported distribution: {}".format(distribution))
 
