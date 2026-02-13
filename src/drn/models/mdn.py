@@ -41,8 +41,15 @@ class MDN(BaseModel):
 
         # Resolve hidden layer sizes
         if isinstance(hidden_size, list):
+            if num_hidden_layers is not None and num_hidden_layers != len(hidden_size):
+                raise ValueError(
+                    f"num_hidden_layers={num_hidden_layers} doesn't match length of hidden_size list ({len(hidden_size)}). "
+                    "num_hidden_layers is not necessary when hidden_size is a list."
+                )
             sizes = hidden_size
         else:
+            if num_hidden_layers is None:
+                num_hidden_layers = 1
             sizes = [hidden_size] * num_hidden_layers
 
         layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
