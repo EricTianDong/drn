@@ -2,7 +2,6 @@ from __future__ import annotations
 import abc
 import math
 import tempfile
-from pathlib import Path
 from typing import Any, Optional, Union
 import warnings
 import numpy as np
@@ -154,19 +153,14 @@ class BaseModel(L.LightningModule, abc.ABC):
         trainer_kwargs["enable_checkpointing"] = True
 
         # Validation: checkpointing + early stopping
-        # OPTIMIZATION: Use local .tmp directory instead of system temp for better I/O performance
-        local_tmpdir = Path(".tmp_checkpoints")
-        local_tmpdir.mkdir(exist_ok=True)
-
-        with tempfile.TemporaryDirectory(dir=local_tmpdir) as tmpdir:
-            # OPTIMIZATION: Reduce checkpoint frequency - only save on validation, not training
+        with tempfile.TemporaryDirectory() as tmpdir:
             ckpt_cb = ModelCheckpoint(
                 dirpath=tmpdir,
                 filename="best",
                 save_top_k=1,
                 monitor="val_loss",
                 mode="min",
-                save_on_train_epoch_end=False,  # Only save on validation, not every training epoch
+                save_on_train_epoch_end=False,
             )
             early_cb = EarlyStopping(
                 monitor="val_loss", mode="min", patience=patience, verbose=False
