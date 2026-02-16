@@ -22,10 +22,17 @@ class Histogram(Distribution):
 
         # Predicted probabilities vector: (Pr(c_0<Y<c_1|x,w_{Histogram}),..., Pr(c_{K-1}<Y<c_K|x,w_{Histogram}))
         self.prob_masses = prob_masses
+
+        # Check for NaN values
+        if torch.isnan(self.prob_masses).any():
+            raise ValueError("prob_masses contains NaN values")
+
+        # Check probabilities sum to 1 (with tolerance for numerical precision)
         assert torch.allclose(
             torch.sum(self.prob_masses, dim=1),
             torch.ones(self.prob_masses.shape[0], device=cutpoints.device),
-        )
+            rtol=1e-4, atol=1e-6
+        ), f"Probabilities must sum to 1, got {torch.sum(self.prob_masses, dim=1)}"
         assert self.prob_masses.shape[1] == self.num_regions
 
         # Compute the bin widths for later use, i.e., (T_1 = c_1 - c_0,..., T_K = c_K - c_{K-1})
