@@ -20,19 +20,19 @@ class ExtendedHistogram(Distribution):
         baseline: Distribution,
         cutpoints: torch.Tensor,
         pmf: torch.Tensor,
-        baseline_probs: Optional[torch.Tensor] = None,
+        baseline_masses: Optional[torch.Tensor] = None,
     ):
         """
         Args:
             baseline: the original distribution
             cutpoints: the bin boundaries (shape: (K+1,))
-            pmf: the refined (cond.) probability for landing in each region (shape: (n, K))
-            baseline_probs: the baseline's probability for landing in each region (shape: (n, K))
+            pmf: the refined (cond.) probability mass for landing in each region (shape: (n, K))
+            baseline_masses: the baseline's probability mass for landing in each region (shape: (n, K))
         """
         self.baseline = baseline
         self.cutpoints = cutpoints
         self.prob_masses = pmf
-        self.baseline_probs = baseline_probs
+        self.baseline_masses = baseline_masses
         self.histogram = Histogram(cutpoints, pmf)
         self.scale_down_hist = baseline.cdf(cutpoints[-1]) - baseline.cdf(cutpoints[0])
 
@@ -44,13 +44,14 @@ class ExtendedHistogram(Distribution):
 
     def baseline_prob_between_cutpoints(self) -> torch.Tensor:
         """
-        Calculate the baseline probability vector
+        Calculate the baseline probability mass vector (PMF values for each region).
+        Returns masses, not densities - values are bounded [0, 1] and sum to total mass.
         """
-        if self.baseline_probs is None:
+        if self.baseline_masses is None:
             baseline_cdfs = self.baseline.cdf(self.cutpoints.unsqueeze(-1)).T
-            self.baseline_probs = torch.diff(baseline_cdfs, dim=1)
+            self.baseline_masses = torch.diff(baseline_cdfs, dim=1)
 
-        return self.baseline_probs
+        return self.baseline_masses
 
     def real_adjustments(self) -> torch.Tensor:
         """
@@ -60,7 +61,8 @@ class ExtendedHistogram(Distribution):
 
     def prob(self, value: torch.Tensor) -> torch.Tensor:
         """
-        Calculate the probability densities of `values`.
+        Calculate the probability densities (PDF values) of `values`.
+        Note: These are densities, not masses, so values can exceed 1.0.
         """
 
         orig_ndim = value.ndim
@@ -75,20 +77,20 @@ class ExtendedHistogram(Distribution):
         if value.ndim == 1:
             value = value.unsqueeze(0)
 
-        baseline_prob = torch.exp(self.baseline.log_prob(value))
-        baseline_prob = torch.clip(baseline_prob, min=1e-10)
-        hist_prob = self.histogram.prob(value) * self.scale_down_hist
+        baseline_density = torch.exp(self.baseline.log_prob(value))
+        baseline_density = torch.clip(baseline_density, min=1e-10)
+        hist_density = self.histogram.prob(value) * self.scale_down_hist
 
         in_hist = (value >= self.histogram.cutpoints[0]) & (
             value < self.histogram.cutpoints[-1]
         )
         in_baseline = ~in_hist
 
-        probabilities = torch.zeros_like(baseline_prob)
-        probabilities[in_baseline] = baseline_prob[in_baseline]
-        probabilities[in_hist] = hist_prob[in_hist]
+        densities = torch.zeros_like(baseline_density)
+        densities[in_baseline] = baseline_density[in_baseline]
+        densities[in_hist] = hist_density[in_hist]
 
-        return probabilities
+        return densities
 
     def log_prob(self, value: torch.Tensor) -> torch.Tensor:
         return torch.log(self.prob(value))

@@ -1152,9 +1152,9 @@ class DRNExplainer:
         cdfs_drn = self.drn.predict(instances).cdf(cutpoints.unsqueeze(-1))
 
         prob_masses = torch.clamp(torch.diff(cdfs_drn, axis=0), min=1e-12)
-        baseline_probs = torch.clamp(torch.diff(cdfs_baseline, axis=0), min=1e-12)
+        baseline_masses = torch.clamp(torch.diff(cdfs_baseline, axis=0), min=1e-12)
         epsilon = 1e-15
-        real_adjustment_factors = (prob_masses + epsilon) / (baseline_probs + epsilon)
+        real_adjustment_factors = (prob_masses + epsilon) / (baseline_masses + epsilon)
 
         return torch.clamp(real_adjustment_factors, min=0, max=10000)
 

@@ -143,18 +143,18 @@ class DRN(BaseModel):
             if self.debug:
                 assert baseline_cdfs.shape == (x.shape[0], num_cutpoints)
 
-            baseline_probs = torch.diff(baseline_cdfs, dim=1)
+            baseline_masses = torch.diff(baseline_cdfs, dim=1)
             if self.debug:
-                assert baseline_probs.shape == (x.shape[0], num_regions)
+                assert baseline_masses.shape == (x.shape[0], num_regions)
 
-            # Sometimes the GLM probabilities are 0 simply due to numerical problems.
-            # DRN cannot adjust regions with 0 probability, so we ensure 0's become
+            # Sometimes the GLM probability masses are 0 simply due to numerical problems.
+            # DRN cannot adjust regions with 0 probability mass, so we ensure 0's become
             # an incredibly small number just to avoid this issue.
-            safe_baseline_probs = torch.clip(
-                baseline_probs, min=self.baseline_min_prob_mass, max=1.0
+            safe_baseline_masses = torch.clip(
+                baseline_masses, min=self.baseline_min_prob_mass, max=1.0
             )
 
-        drn_logits = torch.log(safe_baseline_probs) + self.log_adjustments(x)
+        drn_logits = torch.log(safe_baseline_masses) + self.log_adjustments(x)
         drn_pmf = torch.softmax(drn_logits, dim=1)
 
         if self.debug:
@@ -165,11 +165,11 @@ class DRN(BaseModel):
                 torch.sum(drn_pmf, dim=1), torch.ones(x.shape[0], device=x.device)
             )
 
-        return baseline_dists, self.cutpoints, safe_baseline_probs, drn_pmf
+        return baseline_dists, self.cutpoints, safe_baseline_masses, drn_pmf
 
     def _predict(self, x: torch.Tensor) -> ExtendedHistogram:
-        baseline_dists, cutpoints, baseline_probs, drn_pmf = self(x)
-        return ExtendedHistogram(baseline_dists, cutpoints, drn_pmf, baseline_probs)
+        baseline_dists, cutpoints, baseline_masses, drn_pmf = self(x)
+        return ExtendedHistogram(baseline_dists, cutpoints, drn_pmf, baseline_masses)
 
     def loss(self, x, y):
         if self.training:
@@ -198,8 +198,8 @@ def drn_loss(
     dv_alpha=0.0,
     kl_direction="forwards",
 ):
-    baseline_dists, cutpoints, baseline_probs, drn_pmf = pred
-    dists = ExtendedHistogram(baseline_dists, cutpoints, drn_pmf, baseline_probs)
+    baseline_dists, cutpoints, baseline_masses, drn_pmf = pred
+    dists = ExtendedHistogram(baseline_dists, cutpoints, drn_pmf, baseline_masses)
 
     if kind == "jbce":
         losses = jbce_loss(dists, y)
@@ -209,7 +209,7 @@ def drn_loss(
     reg_loss = 0.0
     epsilon = 1e-30
     a_i = dists.real_adjustments()
-    b_i = baseline_probs
+    b_i = baseline_masses  # Probability masses for each region
 
     if kl_alpha > 0:
         if kl_direction == "forwards":
@@ -223,6 +223,7 @@ def drn_loss(
         reg_loss += mean_alpha * mean_penalty
 
     if tv_alpha > 0 or dv_alpha > 0:
+        # Convert masses to densities for smoothness regularization
         drn_density = a_i * b_i / torch.diff(cutpoints)
         first_diffs = torch.diff(drn_density, dim=1)
 
