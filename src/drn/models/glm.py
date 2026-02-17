@@ -9,6 +9,7 @@ import torch.nn as nn
 from statsmodels.genmod.families import Gamma, Gaussian, InverseGaussian
 
 from .base import BaseModel
+from .constant import Constant
 from ..distributions import inverse_gaussian
 from ..distributions.estimation import gamma_convert_parameters, estimate_dispersion
 from ..utils import _to_numpy
@@ -194,3 +195,11 @@ def inverse_gaussian_deviance_loss(
 
     loss = (y - mu).pow(2) / (y * mu.pow(2))
     return loss.mean()
+
+
+def _build_baseline(kind: str, distribution: str) -> Union[GLM, Constant]:
+    if kind == "GLM":
+        return GLM(distribution=distribution)
+    if kind == "Constant":
+        return Constant(distribution=distribution)
+    raise ValueError(f"Unsupported baseline kind: {kind!r}")

@@ -28,6 +28,10 @@ class DDR(BaseModel):
             hidden_size: The number of neurons in each hidden layer.
 
         """
+        # Can't put numpy float dtypes in the checkpoints
+        if cutpoints is not None:
+            cutpoints = [float(c) for c in cutpoints]  # strips numpy scalars
+
         self.save_hyperparameters()
         super(DDR, self).__init__()
 

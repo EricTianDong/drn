@@ -8,12 +8,14 @@ import torch.nn as nn
 from ..distributions.extended_histogram import ExtendedHistogram
 from .ddr import jbce_loss, nll_loss
 from .base import BaseModel
+from .constant import Constant
+from .glm import GLM, _build_baseline
 
 
 class DRN(BaseModel):
     def __init__(
         self,
-        baseline,
+        baseline: Optional[Union[GLM, Constant]] = None,
         cutpoints: Optional[list[float]] = None,
         ct=None,
         num_hidden_layers=None,
@@ -31,6 +33,9 @@ class DRN(BaseModel):
         learning_rate=1e-3,
         debug=False,
         baseline_min_prob_mass=1e-10,
+        *,
+        _baseline_kind: str | None = None,
+        _baseline_distribution: str | None = None,
     ):
         """
         Args:
@@ -41,7 +46,30 @@ class DRN(BaseModel):
                 num_hidden_layers) or a list of ints (explicit per-layer widths,
                 num_hidden_layers is ignored).
         """
-        self.save_hyperparameters()
+        # Rehydrate baseline when loading from checkpoint
+        if baseline is None:
+            if _baseline_kind is None or _baseline_distribution is None:
+                raise TypeError(
+                    "DRN(...) requires `baseline=` when training from scratch. "
+                    "When loading from checkpoint, `_baseline_kind` and `_baseline_distribution` "
+                    "must be present in hparams."
+                )
+            baseline = _build_baseline(_baseline_kind, _baseline_distribution)
+        else:
+            # Derive minimal metadata for checkpoint reloads
+            _baseline_kind = baseline.__class__.__name__
+            _baseline_distribution = getattr(baseline, "distribution", None)
+            if _baseline_distribution is None:
+                raise TypeError(
+                    "baseline must have a `.distribution` attribute (e.g. GLM or Constant)."
+                )
+
+        # Can't put numpy float dtypes in the checkpoints
+        if cutpoints is not None:
+            cutpoints = [float(c) for c in cutpoints]  # strips numpy scalars
+            
+        self.save_hyperparameters(ignore=["baseline"])
+
         super(DRN, self).__init__()
         self.glm = baseline.clone()
         self.ct = ct

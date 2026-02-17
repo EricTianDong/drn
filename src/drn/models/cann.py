@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Union
+from typing import Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -13,6 +13,7 @@ from .glm import (
     gamma_deviance_loss,
     gaussian_deviance_loss,
     inverse_gaussian_deviance_loss,
+    _build_baseline,
 )
 from ..distributions import InverseGaussian
 from .base import BaseModel
@@ -26,12 +27,15 @@ class CANN(BaseModel):
 
     def __init__(
         self,
-        baseline: Union[GLM, Constant],
+        baseline: Optional[Union[GLM, Constant]] = None,
         num_hidden_layers=2,
         hidden_size=50,
         dropout_rate=0.2,
         train_glm=False,
         learning_rate=1e-3,
+        *,
+        _baseline_kind: str | None = None,
+        _baseline_distribution: str | None = None,
     ):
         """
         Args:
@@ -40,9 +44,24 @@ class CANN(BaseModel):
             hidden_size: the number of neurons in each hidden layer
             train_glm: whether to retrain the baseline model or not
         """
-        self.save_hyperparameters()
+        # Rehydrate baseline when loading from checkpoint
+        if baseline is None:
+            if _baseline_kind is None or _baseline_distribution is None:
+                raise TypeError(
+                    "CANN(...) requires `baseline=` when training from scratch. "
+                    "When loading from checkpoint, `_baseline_kind` and `_baseline_distribution` "
+                    "must be present in hparams."
+                )
+            baseline = _build_baseline(_baseline_kind, _baseline_distribution)
+        else:
+            _baseline_kind = baseline.__class__.__name__
+            _baseline_distribution = getattr(baseline, "distribution", None)
+            if _baseline_distribution is None:
+                raise TypeError("baseline must have a `.distribution` attribute.")
 
-        if not baseline.distribution in ("gamma", "gaussian", "inversegaussian"):
+        self.save_hyperparameters(ignore=["baseline"])
+
+        if baseline.distribution not in ("gamma", "gaussian", "inversegaussian"):
             raise ValueError(f"Unsupported model type: {baseline.distribution}")
 
         super(CANN, self).__init__()
