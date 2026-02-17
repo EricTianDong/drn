@@ -83,7 +83,7 @@ def train(
 
         range_selection = trange if print_details else range
         for epoch in range_selection(1, epochs + 1):
-            epochs_run = epoch + 1
+            epochs_run = epoch
             model.train()
 
             for data, target in train_loader:
