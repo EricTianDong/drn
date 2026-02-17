@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -42,10 +41,10 @@ class GLM(BaseModel):
 
     def fit(
         self,
-        X_train: Union[pd.DataFrame, np.ndarray],
-        y_train: Union[pd.DataFrame, pd.Series, np.ndarray],
-        X_val: Optional[Union[pd.DataFrame, np.ndarray]] = None,
-        y_val: Optional[Union[pd.DataFrame, pd.Series, np.ndarray]] = None,
+        X_train: pd.DataFrame | np.ndarray,
+        y_train: pd.DataFrame | pd.Series | np.ndarray,
+        X_val: pd.DataFrame | np.ndarray | None = None,
+        y_val: pd.DataFrame | pd.Series | np.ndarray | None = None,
         grad_descent: bool = False,
         *args,
         **kwargs,
@@ -129,8 +128,8 @@ class GLM(BaseModel):
 
     def update_dispersion(
         self,
-        X_train: Union[np.ndarray, pd.DataFrame, torch.Tensor],
-        y_train: Union[np.ndarray, pd.Series, torch.Tensor],
+        X_train: np.ndarray | pd.DataFrame | torch.Tensor,
+        y_train: np.ndarray | pd.Series | torch.Tensor,
     ) -> None:
         X = self.preprocess(X_train)
         y = self.preprocess(y_train, targets=True)
@@ -197,7 +196,7 @@ def inverse_gaussian_deviance_loss(
     return loss.mean()
 
 
-def _build_baseline(kind: str, distribution: str) -> Union[GLM, Constant]:
+def _build_baseline(kind: str, distribution: str) -> GLM | Constant:
     if kind == "GLM":
         return GLM(distribution=distribution)
     if kind == "Constant":

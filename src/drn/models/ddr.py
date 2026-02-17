@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Optional, Union
 import numpy as np
 import pandas as pd
 import torch
@@ -12,7 +11,7 @@ from .base import BaseModel
 class DDR(BaseModel):
     def __init__(
         self,
-        cutpoints: Optional[list[float]] = None,
+        cutpoints: list[float] | None = None,
         num_hidden_layers=2,
         hidden_size=100,
         dropout_rate=0.2,

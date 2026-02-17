@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Optional, Union
 import numpy as np
 import pandas as pd
 import torch
@@ -15,8 +14,8 @@ from .glm import GLM, _build_baseline
 class DRN(BaseModel):
     def __init__(
         self,
-        baseline: Optional[Union[GLM, Constant]] = None,
-        cutpoints: Optional[list[float]] = None,
+        baseline: GLM | Constant | None = None,
+        cutpoints: list[float] | None = None,
         ct=None,
         num_hidden_layers=None,
         hidden_size: int | list[int] = 75,
@@ -316,8 +315,8 @@ def drn_cutpoints(
     c_0: float,
     c_K: float,
     y: np.ndarray,
-    proportion: Optional[float] = None,
-    num_cutpoints: Optional[int] = None,
+    proportion: float | None = None,
+    num_cutpoints: int | None = None,
     min_obs=1,
 ):
     if proportion is None and num_cutpoints is None:
@@ -337,7 +336,7 @@ def drn_cutpoints(
 
 
 def default_drn_cutpoints(
-    y: Union[np.ndarray, pd.DataFrame, pd.Series, torch.Tensor],
+    y: np.ndarray | pd.DataFrame | pd.Series | torch.Tensor,
     proportion: float = 0.1,
     min_obs: int = 1,
 ) -> list[float]:

@@ -1,10 +1,9 @@
-from typing import Union
 import numpy as np
 import pandas as pd
 import torch
 
 
-def _to_tensor(arr: Union[pd.DataFrame, pd.Series, np.ndarray]) -> torch.Tensor:
+def _to_tensor(arr: pd.DataFrame | pd.Series | np.ndarray) -> torch.Tensor:
     """Convert pandas or numpy array to float32 torch.Tensor."""
     if isinstance(arr, (pd.DataFrame, pd.Series)):
         vals = arr.values
@@ -14,7 +13,7 @@ def _to_tensor(arr: Union[pd.DataFrame, pd.Series, np.ndarray]) -> torch.Tensor:
 
 
 def crps(
-    obs: Union[np.ndarray, pd.Series, torch.Tensor],
+    obs: np.ndarray | pd.Series | torch.Tensor,
     grid: torch.Tensor,
     cdf_on_grid: torch.Tensor,
 ):

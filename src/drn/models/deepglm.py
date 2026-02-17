@@ -1,6 +1,5 @@
 
 from __future__ import annotations
-from typing import Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -36,7 +35,7 @@ class DeepGLM(BaseModel):
         hidden_size: int = 128,
         dropout_rate: float = 0.1,
         learning_rate: float = 1e-3,
-        ct: Optional[object] = None,
+        ct: object | None = None,
     ) -> None:
         self.save_hyperparameters()
         super(DeepGLM, self).__init__()
@@ -109,8 +108,8 @@ class DeepGLM(BaseModel):
 
     def update_dispersion(
         self,
-        X_train: Union[np.ndarray, pd.DataFrame, torch.Tensor],
-        y_train: Union[np.ndarray, pd.Series, torch.Tensor],
+        X_train: np.ndarray | pd.DataFrame | torch.Tensor,
+        y_train: np.ndarray | pd.Series | torch.Tensor,
     ) -> None:
         X = self.preprocess(X_train)
         y = self.preprocess(y_train, targets=True)
@@ -122,7 +121,7 @@ class DeepGLM(BaseModel):
         disp = estimate_dispersion(self.distribution, self(X), y_for_disp, X.shape[1])
         self.dispersion = nn.Parameter(torch.tensor([disp]), requires_grad=False)
 
-    def mean(self, x: Union[np.ndarray, torch.Tensor]) -> np.ndarray:
+    def mean(self, x: np.ndarray | torch.Tensor) -> np.ndarray:
         if isinstance(x, np.ndarray):
             x = torch.tensor(x, dtype=torch.float32)
         return self(x).detach().cpu().numpy().squeeze()

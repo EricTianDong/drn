@@ -16,7 +16,7 @@ dependencies = [
     "torch",
     "tqdm"
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [
   {name = "Eric Dong", email = "tiandong1999@gmail.com"},
   {name = "Patrick Laub", email = "patrick.laub@gmail.com"},

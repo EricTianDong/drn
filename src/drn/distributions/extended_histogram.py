@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from typing import Optional
 from torch.distributions import Distribution, Categorical
 
 from .histogram import Histogram
@@ -20,7 +19,7 @@ class ExtendedHistogram(Distribution):
         baseline: Distribution,
         cutpoints: torch.Tensor,
         pmf: torch.Tensor,
-        baseline_masses: Optional[torch.Tensor] = None,
+        baseline_masses: torch.Tensor | None = None,
     ):
         """
         Args:

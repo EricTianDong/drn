@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Optional, Union
 
 import numpy as np
 import pandas as pd
@@ -27,7 +26,7 @@ class CANN(BaseModel):
 
     def __init__(
         self,
-        baseline: Optional[Union[GLM, Constant]] = None,
+        baseline: GLM | Constant | None = None,
         num_hidden_layers=2,
         hidden_size=50,
         dropout_rate=0.2,
@@ -125,7 +124,7 @@ class CANN(BaseModel):
 
     def _predict(
         self, x: torch.Tensor
-    ) -> Union[torch.distributions.Gamma, torch.distributions.Normal]:
+    ) -> torch.distributions.Gamma | torch.distributions.Normal:
         """
         Create distributional forecasts for the given inputs, specific to the model type.
         """
@@ -148,8 +147,8 @@ class CANN(BaseModel):
 
     def update_dispersion(
         self,
-        X_train: Union[np.ndarray, pd.DataFrame, torch.Tensor],
-        y_train: Union[np.ndarray, pd.Series, torch.Tensor],
+        X_train: np.ndarray | pd.DataFrame | torch.Tensor,
+        y_train: np.ndarray | pd.Series | torch.Tensor,
     ) -> None:
         X = self.preprocess(X_train)
         y = self.preprocess(y_train, targets=True)

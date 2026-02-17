@@ -2,7 +2,7 @@ from __future__ import annotations
 import abc
 import math
 import tempfile
-from typing import Any, Optional, Union
+from typing import Any
 import warnings
 import numpy as np
 import pandas as pd
@@ -24,7 +24,7 @@ class BaseModel(L.LightningModule, abc.ABC):
     @abc.abstractmethod
     def loss(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor: ...
 
-    def predict(self, x_raw: Union[np.ndarray, pd.DataFrame, pd.Series]) -> Any:
+    def predict(self, x_raw: np.ndarray | pd.DataFrame | pd.Series) -> Any:
         """Creates a distributional prediction for the input data.
         Here, `x_raw` is raw data, and this method will apply any model-specific preprocessing.
         """
@@ -83,14 +83,14 @@ class BaseModel(L.LightningModule, abc.ABC):
 
     def fit(
         self,
-        X_train: Union[pd.DataFrame, np.ndarray],
-        y_train: Union[pd.DataFrame, pd.Series, np.ndarray],
-        X_val: Optional[Union[pd.DataFrame, np.ndarray]] = None,
-        y_val: Optional[Union[pd.DataFrame, pd.Series, np.ndarray]] = None,
+        X_train: pd.DataFrame | np.ndarray,
+        y_train: pd.DataFrame | pd.Series | np.ndarray,
+        X_val: pd.DataFrame | np.ndarray | None = None,
+        y_val: pd.DataFrame | pd.Series | np.ndarray | None = None,
         batch_size: int = 128,
         epochs: int = 10,
         patience: int = 5,
-        sampler: Optional[Sampler] = None,
+        sampler: Sampler | None = None,
         **trainer_kwargs,
     ) -> BaseModel:
         # Set some default trainer arguments
@@ -184,7 +184,7 @@ class BaseModel(L.LightningModule, abc.ABC):
         return self
 
     def preprocess(
-        self, x: Union[np.ndarray, pd.DataFrame, pd.Series, torch.Tensor], targets=False
+        self, x: np.ndarray | pd.DataFrame | pd.Series | torch.Tensor, targets=False
     ) -> torch.Tensor:
         """
         Convert input data to a PyTorch tensor. Apply any neural network preprocessing (if applicable).
@@ -206,7 +206,7 @@ class BaseModel(L.LightningModule, abc.ABC):
 
     def icdf(
         self,
-        x: Union[np.ndarray, pd.DataFrame, pd.Series, torch.Tensor],
+        x: np.ndarray | pd.DataFrame | pd.Series | torch.Tensor,
         p: float,
         l=None,
         u=None,
@@ -242,7 +242,7 @@ class BaseModel(L.LightningModule, abc.ABC):
 
     def quantiles(
         self,
-        x: Union[np.ndarray, pd.DataFrame, pd.Series],
+        x: np.ndarray | pd.DataFrame | pd.Series,
         percentiles: list,
         l=None,
         u=None,

@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 import pandas as pd
-from typing import Union, Any
+from typing import Any
 from .base import BaseModel
 from torch.distributions import Gamma, Normal
 from ..utils import _to_numpy
@@ -43,8 +43,8 @@ class Constant(BaseModel):
 
     def fit(
         self,
-        X_train: Union[pd.DataFrame, np.ndarray],  # ignored
-        y_train: Union[pd.DataFrame, pd.Series, np.ndarray],
+        X_train: pd.DataFrame | np.ndarray,  # ignored
+        y_train: pd.DataFrame | pd.Series | np.ndarray,
         *args,
         **kwargs,
     ) -> Constant:
@@ -70,7 +70,7 @@ class Constant(BaseModel):
         """
         return self._predict(x)
 
-    def _predict(self, x: Any) -> Union[Gamma, Normal, InverseGaussian]:
+    def _predict(self, x: Any) -> Gamma | Normal | InverseGaussian:
         batch = self.mean_value.new_zeros(x.shape[0]) + self.mean_value
         phi = self.dispersion
         if self.distribution == "gamma":

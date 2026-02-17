@@ -1,4 +1,3 @@
-from typing import List, Union
 
 import numpy as np
 import pandas as pd
@@ -77,7 +76,7 @@ class MDN(BaseModel):
         self.loss_fn = gamma_mdn_loss if distribution == "gamma" else gaussian_mdn_loss
         self.learning_rate = learning_rate
 
-    def forward(self, x: torch.Tensor) -> List[torch.Tensor]:
+    def forward(self, x: torch.Tensor) -> list[torch.Tensor]:
         """
         Calculate the parameters of the mixture components.
         Args:
@@ -119,7 +118,7 @@ class MDN(BaseModel):
     def loss(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
         return self.loss_fn(self(x), y)
 
-    def mean(self, x: Union[np.ndarray, torch.Tensor]) -> np.ndarray:
+    def mean(self, x: np.ndarray | torch.Tensor) -> np.ndarray:
         """
         Calculate the predicted means for the given observations, depending on the mixture distribution.
         Args:

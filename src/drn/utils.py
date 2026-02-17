@@ -1,4 +1,3 @@
-from typing import Optional
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -140,7 +139,7 @@ def replace_rare_categories(
     df: pd.DataFrame,
     threshold: int | float = 10,
     placeholder: str = "OTHER",
-    cat_features: Optional[list[str]] = None,
+    cat_features: list[str] | None = None,
 ) -> pd.DataFrame:
     """
     Replace rare categories in specified categorical columns with a placeholder category.

@@ -1,5 +1,4 @@
 import re
-from typing import Optional
 
 import matplotlib.pyplot as plt
 
@@ -28,7 +27,7 @@ class DRNExplainer:
         glm: GLM,
         default_cutpoints: list,
         background_data_raw: pd.DataFrame,
-        preprocessor: Optional[ColumnTransformer] = None,
+        preprocessor: ColumnTransformer | None = None,
     ):
         """
         Initialise the DRNExplainer with the given parameters.
@@ -61,25 +60,25 @@ class DRNExplainer:
         self,
         instance_raw: pd.DataFrame,
         dist_property: str = "Mean",
-        quantile_bounds: Optional[tuple] = None,
+        quantile_bounds: tuple | None = None,
         method: str = "Kernel",
         nsamples_background_fraction: float = 1.0,
         top_K_features: int = 3,
         adjustment: bool = True,
-        other_df_models: Optional[list] = None,
-        model_names: Optional[list] = None,
-        cutpoints: Optional[list] = None,
-        num_interpolations: Optional[int] = None,
+        other_df_models: list | None = None,
+        model_names: list | None = None,
+        cutpoints: list | None = None,
+        num_interpolations: int | None = None,
         labelling_gap: float = 0.05,
         synthetic_data=None,
         synthetic_data_samples: int = int(1e6),
         observation=None,
         plot_baseline: bool = True,
         # Plotting parameters below:
-        x_range: Optional[tuple] = None,
-        y_range: Optional[tuple] = None,
-        plot_y_label: Optional[str] = None,
-        plot_title: Optional[str] = None,
+        x_range: tuple | None = None,
+        y_range: tuple | None = None,
+        plot_y_label: str | None = None,
+        plot_title: str | None = None,
         figsize=None,
         density_transparency: float = 1.0,
         shap_fontsize: int = 25,
@@ -277,7 +276,7 @@ class DRNExplainer:
         cutpoints_label_bool=False,
         synthetic_data=None,
         plot_adjustments_labels=True,
-        axes: Optional[plt.Axes] = None,
+        axes: plt.Axes | None = None,
         x_range=None,
         y_range=None,
         plot_title=None,
@@ -764,8 +763,8 @@ class DRNExplainer:
         axes=None,
         top_K_features: int = 3,
         # Plot styling parameters grouped at the end
-        y_max: Optional[float] = None,
-        y_min: Optional[float] = None,
+        y_max: float | None = None,
+        y_min: float | None = None,
         labelling_gap: float = 0.05,
         fontsize: int = 25,
     ):

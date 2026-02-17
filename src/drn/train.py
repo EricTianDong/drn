@@ -1,6 +1,6 @@
 from __future__ import annotations
 import copy
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import torch
 import torch.nn as nn
@@ -16,8 +16,8 @@ def train(
     val_dataset: torch.utils.data.Dataset,
     epochs=200,
     patience=5,
-    lr: Optional[float] = None,
-    device: Optional[torch.device] = None,
+    lr: float | None = None,
+    device: torch.device | None = None,
     log_interval=10,
     batch_size=128,
     optimizer=torch.optim.Adam,
