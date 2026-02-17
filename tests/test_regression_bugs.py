@@ -1,10 +1,12 @@
 """Regression tests for previously-discovered bugs."""
 
 import numpy as np
+import pandas as pd
 import torch
 from synthetic_dataset import generate_synthetic_tensordataset
 
 from drn import GLM, train
+from drn.metrics import quantile_score, rmse
 from drn.models.glm import gaussian_deviance_loss
 
 
@@ -65,3 +67,46 @@ def test_train_epochs_trained_with_early_stop():
     assert 1 <= glm.epochs_trained <= epochs, (
         f"epochs_trained={glm.epochs_trained} out of range [1, {epochs}]"
     )
+
+
+# ── metrics must accept numpy arrays, pandas, and tensors ────────────────
+
+def test_quantile_score_accepts_numpy():
+    """quantile_score should work with numpy array inputs."""
+    y_true = np.array([1.0, 2.0, 3.0])
+    y_pred = np.array([1.1, 1.9, 3.2])
+    score = quantile_score(y_true, y_pred, p=0.5)
+    assert isinstance(score, torch.Tensor)
+    assert score.isfinite()
+
+
+def test_quantile_score_accepts_pandas():
+    """quantile_score should work with pandas Series inputs."""
+    y_true = pd.Series([1.0, 2.0, 3.0])
+    y_pred = pd.Series([1.1, 1.9, 3.2])
+    score = quantile_score(y_true, y_pred, p=0.5)
+    assert isinstance(score, torch.Tensor)
+    assert score.isfinite()
+
+
+def test_quantile_score_consistent_across_types():
+    """quantile_score should return the same value for numpy, pandas, and tensor."""
+    vals_true = [1.0, 2.0, 3.0]
+    vals_pred = [1.1, 1.9, 3.2]
+    p = 0.5
+
+    score_np = quantile_score(np.array(vals_true), np.array(vals_pred), p)
+    score_pd = quantile_score(pd.Series(vals_true), pd.Series(vals_pred), p)
+    score_pt = quantile_score(torch.tensor(vals_true), torch.tensor(vals_pred), p)
+
+    assert torch.allclose(score_np, score_pd)
+    assert torch.allclose(score_np, score_pt)
+
+
+def test_rmse_accepts_numpy():
+    """rmse should work with numpy array inputs."""
+    y = np.array([1.0, 2.0, 3.0])
+    y_hat = torch.tensor([1.1, 1.9, 3.2])
+    score = rmse(y, y_hat)
+    assert isinstance(score, torch.Tensor)
+    assert score.isfinite()

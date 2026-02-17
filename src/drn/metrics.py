@@ -54,10 +54,8 @@ def quantile_score(y_true, y_pred, p, mean_tensor=True):
     :return: The quantile score as a PyTorch tensor.
     """
     # Ensure that y_true and y_pred are PyTorch tensors
-    y_true = (
-        torch.Tensor(y_true.values) if not isinstance(y_true, torch.Tensor) else y_true
-    )
-    y_pred = torch.Tensor(y_pred) if not isinstance(y_pred, torch.Tensor) else y_pred
+    y_true = _to_tensor(y_true)
+    y_pred = _to_tensor(y_pred)
     # Reshape y_pred to match y_true if necessary and compute the error
     e = y_true - y_pred.reshape(y_true.shape)
     # Compute the quantile score
@@ -123,10 +121,6 @@ def rmse(y, y_hat):
     :return: The RMSE as a PyTorch tensor.
     """
     # Convert y to a PyTorch tensor if it is not already one
-    if not isinstance(y, torch.Tensor):
-        if hasattr(y, "values"):  # pandas Series/DataFrame
-            y = torch.Tensor(y.values)
-        else:  # numpy array or other array-like
-            y = torch.Tensor(y)
+    y = _to_tensor(y)
     # Calculate the RMSE
     return torch.sqrt(torch.mean((y.squeeze() - y_hat.squeeze()) ** 2))
