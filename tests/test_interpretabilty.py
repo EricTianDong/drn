@@ -11,7 +11,16 @@ from synthetic_dataset import generate_synthetic_tensordataset
 
 from drn import *
 
+# Check if SHAP is available (optional dependency)
+try:
+    import shap
+    from drn.kernel_shap_explainer import KernelSHAP_DRN
+    HAS_SHAP = True
+except ImportError:
+    HAS_SHAP = False
 
+
+@pytest.mark.skipif(not HAS_SHAP, reason="SHAP not installed - install with: pip install drn[shap]")
 def test_plot_adjustment_factors():
 
     X_train, Y_train, train_dataset, val_dataset = generate_synthetic_tensordataset()

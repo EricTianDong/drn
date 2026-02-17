@@ -18,7 +18,7 @@ class MDN(BaseModel):
     def __init__(
         self,
         distribution="gamma",
-        num_hidden_layers=2,
+        num_hidden_layers=None,
         num_components=5,
         hidden_size: int | list[int] = 100,
         dropout_rate=0.2,
@@ -49,7 +49,7 @@ class MDN(BaseModel):
             sizes = hidden_size
         else:
             if num_hidden_layers is None:
-                num_hidden_layers = 1
+                num_hidden_layers = 2
             sizes = [hidden_size] * num_hidden_layers
 
         layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]

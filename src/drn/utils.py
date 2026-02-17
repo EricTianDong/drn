@@ -167,7 +167,7 @@ def replace_rare_categories(
     columns = (
         cat_features
         if cat_features is not None
-        else df.select_dtypes(include=["object", "category"]).columns
+        else df.select_dtypes(include=["object", "category", "str"]).columns
     )
 
     # Check for placeholder conflicts

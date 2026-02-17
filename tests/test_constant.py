@@ -38,7 +38,7 @@ def test_distributions_initial():
     dist = c.predict(x)
     assert isinstance(dist, InverseGaussian)
     # mean property for custom IG
-    assert torch.allclose(torch.tensor(dist.mean), torch.tensor([1.0] * 4))
+    assert torch.allclose(dist.mean, torch.tensor([1.0] * 4))
 
     # Gaussian
     c = Constant("gaussian")
@@ -120,7 +120,7 @@ def test_equivalence_with_zeroed_glm():
             assert torch.allclose(d1.loc, d2.loc)
             assert torch.allclose(d1.scale, d2.scale)
         else:
-            assert torch.allclose(torch.tensor(d1.mean), torch.tensor(d2.mean))
+            assert torch.allclose(d1.mean, d2.mean)
             assert const.dispersion.item() == pytest.approx(glm.dispersion.item())
 
 

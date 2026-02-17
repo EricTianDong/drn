@@ -201,7 +201,8 @@ class BaseModel(L.LightningModule, abc.ABC):
         if targets:
             x_np = x_np.reshape(-1)
 
-        return torch.Tensor(x_np).to(self.device)
+        # Use from_numpy with a copy to handle non-writable arrays
+        return torch.from_numpy(np.array(x_np, copy=True)).float().to(self.device)
 
     def icdf(
         self,

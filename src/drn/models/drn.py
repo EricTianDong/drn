@@ -16,7 +16,7 @@ class DRN(BaseModel):
         baseline,
         cutpoints: Optional[list[float]] = None,
         ct=None,
-        num_hidden_layers=2,
+        num_hidden_layers=None,
         hidden_size: int | list[int] = 75,
         dropout_rate=0.2,
         baseline_start=False,
@@ -59,7 +59,7 @@ class DRN(BaseModel):
             sizes = hidden_size
         else:
             if num_hidden_layers is None:
-                num_hidden_layers = 1
+                num_hidden_layers = 2
             sizes = [hidden_size] * num_hidden_layers
 
         layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]

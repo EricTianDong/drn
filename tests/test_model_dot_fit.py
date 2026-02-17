@@ -30,7 +30,8 @@ def _to_tensor(arr):
     """Convert NumPy array or pandas to torch.FloatTensor."""
     if isinstance(arr, (pd.DataFrame, pd.Series)):
         arr = arr.values
-    return torch.Tensor(arr)
+    # Use from_numpy with copy to handle non-writable arrays
+    return torch.from_numpy(np.array(arr, copy=True)).float()
 
 
 def check_crps(model, X_train, y_train, grid_size=3000):
@@ -404,10 +405,10 @@ def test_pandas_and_tensor_inputs_agree():
     y_train_pd = pd.Series(y_train_np, name="Y")
     y_val_pd = pd.Series(y_val_np, name="Y")
 
-    X_train_tensor = torch.Tensor(X_train_pd.values)
-    X_val_tensor = torch.Tensor(X_val_pd.values)
-    y_train_tensor = torch.Tensor(y_train_pd.values).flatten()
-    y_val_tensor = torch.Tensor(y_val_pd.values).flatten()
+    X_train_tensor = torch.from_numpy(np.array(X_train_pd.values, copy=True)).float()
+    X_val_tensor = torch.from_numpy(np.array(X_val_pd.values, copy=True)).float()
+    y_train_tensor = torch.from_numpy(np.array(y_train_pd.values, copy=True)).float().flatten()
+    y_val_tensor = torch.from_numpy(np.array(y_val_pd.values, copy=True)).float().flatten()
 
     glm = GLM("gamma").fit(X_train_pd, y_train_pd)
 

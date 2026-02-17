@@ -2,6 +2,8 @@ import torch
 
 
 class InverseGaussian(torch.distributions.Distribution):
+    arg_constraints = {}  # No constraints on mean and dispersion parameters
+
     def __init__(self, mean: torch.Tensor, dispersion: torch.Tensor):
         self.mu = mean
         self.dispersion = dispersion
