@@ -29,12 +29,10 @@ class GLM(BaseModel):
 
         if self.distribution == "inversegaussian":
             self.loss_fn = inverse_gaussian_deviance_loss
+        elif self.distribution in ("gaussian", "lognormal"):
+            self.loss_fn = gaussian_deviance_loss
         else:
-            self.loss_fn = (
-                gaussian_deviance_loss
-                if self.distribution == "gaussian"
-                else gamma_deviance_loss
-            )
+            self.loss_fn = gamma_deviance_loss
 
         self.learning_rate = learning_rate
         self.linear = nn.LazyLinear(1)
@@ -124,6 +122,8 @@ class GLM(BaseModel):
             return torch.distributions.Normal(self(x), self.dispersion)
 
     def loss(self, X: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        if self.distribution == "lognormal":
+            return self.loss_fn(self(X), torch.log(y))
         return self.loss_fn(self(X), y)
 
     def update_dispersion(
@@ -133,6 +133,9 @@ class GLM(BaseModel):
     ) -> None:
         X = self.preprocess(X_train)
         y = self.preprocess(y_train, targets=True)
+        # For lognormal, pass the log-transformed targets to estimate_dispersion
+        if self.distribution == "lognormal":
+            y = torch.log(y)
         disp = estimate_dispersion(self.distribution, self(X), y, X_train.shape[1])
         self.dispersion = nn.Parameter(torch.Tensor([disp]), requires_grad=False)
 
