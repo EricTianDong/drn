@@ -24,6 +24,7 @@ class MDN(BaseModel):
         dropout_rate=0.2,
         weight_decay=0.0,
         learning_rate=1e-3,
+        sigma_alpha=0.0,
     ):
         """
         Args:
@@ -71,6 +72,7 @@ class MDN(BaseModel):
         self.loss_fn = gamma_mdn_loss if distribution == "gamma" else gaussian_mdn_loss
         self.learning_rate = learning_rate
         self.weight_decay = weight_decay
+        self.sigma_alpha = sigma_alpha
 
     def forward(self, x: torch.Tensor) -> list[torch.Tensor]:
         """
@@ -112,7 +114,16 @@ class MDN(BaseModel):
         return MixtureSameFamily(mixture, components)
 
     def loss(self, x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
-        return self.loss_fn(self(x), y)
+        params = self(x)
+        nll = self.loss_fn(params, y)
+
+        if self.training and self.sigma_alpha > 0:
+            # Sigma activity regularisation: L2 penalty on the scale parameters.
+            # params layout: [weights, alphas, betas] (gamma) or [weights, mus, sigmas] (gaussian)
+            scales = params[2]  # betas for gamma, sigmas for gaussian
+            nll = nll + self.sigma_alpha * (scales ** 2).sum(dim=1).mean()
+
+        return nll
 
     def mean(self, x: np.ndarray | torch.Tensor) -> np.ndarray:
         """
