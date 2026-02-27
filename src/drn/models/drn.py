@@ -9,6 +9,7 @@ from .ddr import jbce_loss, nll_loss
 from .base import BaseModel
 from .constant import Constant
 from .glm import GLM, _build_baseline
+from .layers import build_hidden_layers
 
 
 class DRN(BaseModel):
@@ -20,6 +21,7 @@ class DRN(BaseModel):
         num_hidden_layers=None,
         hidden_size: int | list[int] = 75,
         dropout_rate=0.2,
+        weight_decay=0.0,
         baseline_start=False,
         proportion=0.1,
         min_obs=1,
@@ -89,13 +91,7 @@ class DRN(BaseModel):
                 num_hidden_layers = 2
             sizes = [hidden_size] * num_hidden_layers
 
-        layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for i in range(1, len(sizes)):
-            layers.append(nn.Linear(sizes[i - 1], sizes[i]))
-            layers.append(nn.LeakyReLU())
-            layers.append(nn.Dropout(dropout_rate))
-
-        self.hidden_layers = nn.Sequential(*layers)
+        self.hidden_layers = build_hidden_layers(sizes, dropout_rate)
 
         last_hidden = sizes[-1]
 
@@ -122,6 +118,7 @@ class DRN(BaseModel):
         self.dv_alpha = dv_alpha
         self.kl_direction = kl_direction
         self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
         self.baseline_min_prob_mass = baseline_min_prob_mass
         self.debug = debug
 

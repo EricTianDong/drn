@@ -22,8 +22,9 @@ def count_params(input_dim: int, hidden_sizes: list[int], output_dim: int) -> in
     total = 0
     prev = input_dim
     for h in hidden_sizes:
-        total += prev * h + h  # weights + biases
+        total += prev * h + h
         prev = h
+
     total += prev * output_dim + output_dim  # output layer
     return total
 
@@ -162,7 +163,7 @@ def compute_hidden_sizes(
     input_dim: int,
     output_dim: int,
     num_layers: int | None = None,
-    shape: str = "funnel",
+    shape: str = "rectangular",
 ) -> list[int]:
     """Convert a total parameter budget into concrete hidden layer sizes.
 
@@ -174,6 +175,8 @@ def compute_hidden_sizes(
             chosen automatically — the deepest architecture (up to 5 layers)
             whose last hidden layer is at least as wide as ``output_dim``.
         shape: ``"rectangular"`` (uniform width) or ``"funnel"`` (tapering).
+            Rectangular is the default because it pairs naturally with
+            residual / skip connections (identity shortcut, no projection).
 
     Returns:
         List of hidden layer widths (length == num_layers).

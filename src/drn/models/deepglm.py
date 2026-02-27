@@ -8,6 +8,7 @@ import torch.nn as nn
 
 from .base import BaseModel
 from .glm import gamma_deviance_loss, gaussian_deviance_loss
+from .layers import build_hidden_layers
 from ..distributions import inverse_gaussian
 from ..distributions.estimation import gamma_convert_parameters, estimate_dispersion
 
@@ -34,6 +35,7 @@ class DeepGLM(BaseModel):
         num_hidden_layers: int = 2,
         hidden_size: int = 128,
         dropout_rate: float = 0.1,
+        weight_decay: float = 0.0,
         learning_rate: float = 1e-3,
         ct: object | None = None,
     ) -> None:
@@ -45,17 +47,13 @@ class DeepGLM(BaseModel):
 
         self.distribution = distribution
         self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
         self.ct = ct  # optional ColumnTransformer used by BaseModel.preprocess
 
         # Representation network
-        layers = [nn.LazyLinear(hidden_size), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for _ in range(num_hidden_layers - 1):
-            layers += [
-                nn.Linear(hidden_size, hidden_size),
-                nn.LeakyReLU(),
-                nn.Dropout(dropout_rate),
-            ]
-        self.hidden = nn.Sequential(*layers)
+        self.hidden_layers = build_hidden_layers(
+            [hidden_size] * num_hidden_layers, dropout_rate
+        )
 
         # GLM head
         self.head = nn.Linear(hidden_size, 1)
@@ -77,7 +75,7 @@ class DeepGLM(BaseModel):
         return self
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        h = self.hidden(x)
+        h = self.hidden_layers(x)
         eta = self.head(h).squeeze(-1)
         if self.distribution in ("gamma", "inversegaussian"):
             return torch.exp(eta)
@@ -127,24 +125,21 @@ class DeepGLM(BaseModel):
         return self(x).detach().cpu().numpy().squeeze()
 
     def clone(self) -> "DeepGLM":
-        # Count the actual number of linear layers in the hidden network
-        linear_layers = [l for l in self.hidden if isinstance(l, nn.Linear)]
-        num_hidden_layers = len(linear_layers)
-        
         m = DeepGLM(
-            distribution=self.distribution,
-            num_hidden_layers=num_hidden_layers,
-            hidden_size=self.head.in_features if isinstance(self.head, nn.Linear) else 128,
-            dropout_rate=next((l.p for l in self.hidden if isinstance(l, nn.Dropout)), 0.0),
-            learning_rate=self.learning_rate,
+            distribution=self.hparams.distribution,
+            num_hidden_layers=self.hparams.num_hidden_layers,
+            hidden_size=self.hparams.hidden_size,
+            dropout_rate=self.hparams.dropout_rate,
+            weight_decay=self.hparams.weight_decay,
+            learning_rate=self.hparams.learning_rate,
             ct=self.ct,
         )
-        # Need to initialize the lazy layer first by doing a forward pass
-        # Get the input size from the first linear layer's weight
-        if hasattr(self.hidden[0], 'weight') and self.hidden[0].weight is not None:
-            input_size = self.hidden[0].weight.shape[1]
+        # Initialize the lazy layer so state_dict keys match
+        first_layer = self.hidden_layers[0]
+        if hasattr(first_layer, 'weight') and first_layer.weight is not None:
+            input_size = first_layer.weight.shape[1]
             dummy_input = torch.zeros(1, input_size)
-            m(dummy_input)  # Initialize lazy layer
-        
+            m(dummy_input)
+
         m.load_state_dict(self.state_dict())
         return m

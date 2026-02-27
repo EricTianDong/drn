@@ -39,18 +39,27 @@ class TestCountParams:
 
     def test_variable_width(self):
         # input=4, hidden=[8, 6], output=3
-        # Layer 1: 4*8 + 8 = 40
-        # Layer 2: 8*6 + 6 = 54
-        # Output:  6*3 + 3 = 21
+        # Layer 1 (input proj): 4*8 + 8 = 40
+        # Layer 2 (leftover):   8*6 + 6 = 54
+        # Output:               6*3 + 3 = 21
         assert count_params(4, [8, 6], 3) == 40 + 54 + 21
 
     def test_three_layers(self):
         # input=5, hidden=[10, 8, 4], output=2
-        # Layer 1: 5*10 + 10 = 60
-        # Layer 2: 10*8 + 8 = 88
-        # Layer 3: 8*4 + 4 = 36
-        # Output:  4*2 + 2 = 10
+        # Layer 1 (input proj): 5*10 + 10 = 60
+        # Layer 2:              10*8 + 8 = 88
+        # Layer 3:              8*4 + 4 = 36
+        # Output:               4*2 + 2 = 10
         assert count_params(5, [10, 8, 4], 2) == 60 + 88 + 36 + 10
+
+    def test_four_layers_with_leftover(self):
+        # input=3, hidden=[7, 5, 4, 2], output=1
+        # Layer 1 (input proj): 3*7 + 7 = 28
+        # Layer 2:              7*5 + 5 = 40
+        # Layer 3:              5*4 + 4 = 24
+        # Layer 4:              4*2 + 2 = 10
+        # Output:               2*1 + 1 = 3
+        assert count_params(3, [7, 5, 4, 2], 1) == 28 + 40 + 24 + 10 + 3
 
     def test_empty_hidden_raises(self):
         with pytest.raises(ValueError, match="non-empty"):

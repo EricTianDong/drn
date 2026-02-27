@@ -249,7 +249,7 @@ def test_torch_api():
     drn2 = DRN(glm, cps, num_hidden_layers=np.int64(2), hidden_size=np.int64(hs))
     drn2.fit(X_train, y_train, X_val, y_val, epochs=2)
     total_w2 = sum(p.numel() for p in drn2.hidden_layers.parameters())
-    assert total_w2 == expected and len(drn2.hidden_layers) // 3 == 2
+    assert total_w2 == expected
 
     # dropout behaviour
     drn3 = DRN(glm, cps, num_hidden_layers=2, hidden_size=hs, dropout_rate=0.5)

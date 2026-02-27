@@ -157,7 +157,7 @@ def test_torch():
     train(drn, train_dataset, val_dataset, epochs=2)
 
     num_weights = sum([p.numel() for p in drn.hidden_layers.parameters()])
-    assert num_weights == expected_num_weights and len(drn.hidden_layers) // 3 == 2
+    assert num_weights == expected_num_weights
 
     # Check dropout is working as intended
     drn = DRN(glm, cutpoints, num_hidden_layers=2, hidden_size=hs, dropout_rate=0.5)

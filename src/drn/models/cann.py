@@ -17,6 +17,7 @@ from .glm import (
 from ..distributions import InverseGaussian
 from .base import BaseModel
 from .constant import Constant
+from .layers import build_hidden_layers
 
 
 class CANN(BaseModel):
@@ -30,6 +31,7 @@ class CANN(BaseModel):
         num_hidden_layers=2,
         hidden_size=50,
         dropout_rate=0.2,
+        weight_decay=0.0,
         train_glm=False,
         learning_rate=1e-3,
         *,
@@ -74,18 +76,10 @@ class CANN(BaseModel):
         self.distribution = baseline.distribution
         self.dispersion = nn.Parameter(torch.Tensor([torch.nan]), requires_grad=False)
 
-        layers = [nn.LazyLinear(hidden_size), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for _ in range(num_hidden_layers - 1):
-            layers.extend(
-                [
-                    nn.Linear(hidden_size, hidden_size),
-                    nn.LeakyReLU(),
-                    nn.Dropout(dropout_rate),
-                ]
-            )
-        layers.append(nn.Linear(hidden_size, 1))
-
-        self.nn_output_layer = nn.Sequential(*layers)
+        self.hidden_layers = build_hidden_layers(
+            [hidden_size] * num_hidden_layers, dropout_rate
+        )
+        self.nn_head = nn.Linear(hidden_size, 1)
 
         if self.distribution == "inversegaussian":
             self.loss_fn = inverse_gaussian_deviance_loss
@@ -96,6 +90,7 @@ class CANN(BaseModel):
                 else gamma_deviance_loss
             )
         self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
 
     def fit(self, X_train, y_train, *args, **kwargs) -> CANN:
         super().fit(X_train, y_train, *args, **kwargs)
@@ -110,12 +105,11 @@ class CANN(BaseModel):
         Returns:
             the predicted outputs (shape: (n,))
         """
+        nn_out = self.nn_head(self.hidden_layers(x)).squeeze()
         if self.distribution in ["gamma", "inversegaussian"]:
-            out = torch.exp(
-                torch.log(self.baseline(x)) + self.nn_output_layer(x).squeeze()
-            )
+            out = torch.exp(torch.log(self.baseline(x)) + nn_out)
         else:
-            out = self.baseline(x) + self.nn_output_layer(x).squeeze()
+            out = self.baseline(x) + nn_out
 
         assert out.shape == torch.Size(
             [x.shape[0]]

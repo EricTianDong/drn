@@ -6,6 +6,7 @@ import torch.nn as nn
 from torch.distributions import Categorical
 from torch.distributions.mixture_same_family import MixtureSameFamily
 from .base import BaseModel
+from .layers import build_hidden_layers
 
 
 class MDN(BaseModel):
@@ -21,6 +22,7 @@ class MDN(BaseModel):
         num_components=5,
         hidden_size: int | list[int] = 100,
         dropout_rate=0.2,
+        weight_decay=0.0,
         learning_rate=1e-3,
     ):
         """
@@ -51,14 +53,7 @@ class MDN(BaseModel):
                 num_hidden_layers = 2
             sizes = [hidden_size] * num_hidden_layers
 
-        layers = [nn.LazyLinear(sizes[0]), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for i in range(1, len(sizes)):
-            layers += [
-                nn.Linear(sizes[i - 1], sizes[i]),
-                nn.LeakyReLU(),
-                nn.Dropout(dropout_rate),
-            ]
-        self.hidden_layers = nn.Sequential(*layers)
+        self.hidden_layers = build_hidden_layers(sizes, dropout_rate)
 
         last_hidden = sizes[-1]
 
@@ -75,6 +70,7 @@ class MDN(BaseModel):
 
         self.loss_fn = gamma_mdn_loss if distribution == "gamma" else gaussian_mdn_loss
         self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
 
     def forward(self, x: torch.Tensor) -> list[torch.Tensor]:
         """

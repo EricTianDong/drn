@@ -47,7 +47,25 @@ class BaseModel(L.LightningModule, abc.ABC):
         return loss_val
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
+        wd = getattr(self, "weight_decay", 0.0)
+
+        # Separate parameters: apply weight decay to matrices only (ndim >= 2),
+        # not to biases or other 1-d parameters.
+        decay_params = []
+        no_decay_params = []
+        for param in self.parameters():
+            if not param.requires_grad:
+                continue
+            if param.ndim >= 2:
+                decay_params.append(param)
+            else:
+                no_decay_params.append(param)
+
+        param_groups = [
+            {"params": decay_params, "weight_decay": wd},
+            {"params": no_decay_params, "weight_decay": 0.0},
+        ]
+        optimizer = torch.optim.AdamW(param_groups, lr=self.learning_rate)
 
         sched_type = getattr(self, "_lr_scheduler", None)
         if not sched_type:

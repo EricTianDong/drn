@@ -6,6 +6,7 @@ import torch.nn as nn
 
 from ..distributions.histogram import Histogram
 from .base import BaseModel
+from .layers import build_hidden_layers
 
 
 class DDR(BaseModel):
@@ -15,6 +16,7 @@ class DDR(BaseModel):
         num_hidden_layers=2,
         hidden_size=100,
         dropout_rate=0.2,
+        weight_decay=0.0,
         proportion=0.1,
         loss_metric="jbce",
         learning_rate=1e-3,
@@ -34,14 +36,9 @@ class DDR(BaseModel):
         self.save_hyperparameters()
         super(DDR, self).__init__()
 
-        layers = [nn.LazyLinear(hidden_size), nn.LeakyReLU(), nn.Dropout(dropout_rate)]
-        for _ in range(num_hidden_layers - 1):
-            layers.append(nn.Linear(hidden_size, hidden_size))
-            layers.append(nn.LeakyReLU())
-            layers.append(nn.Dropout(dropout_rate))
-
-        # Use nn.Sequential to chain the layers together
-        self.hidden_layers = nn.Sequential(*layers)
+        self.hidden_layers = build_hidden_layers(
+            [hidden_size] * num_hidden_layers, dropout_rate
+        )
 
         if cutpoints is not None:
             self.cutpoints = nn.Parameter(torch.Tensor(cutpoints), requires_grad=False)
@@ -58,6 +55,7 @@ class DDR(BaseModel):
             raise ValueError(f"Unsupported loss metric: {loss_metric}")
         self.loss_metric = loss_metric
         self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
 
     def fit(self, X_train, y_train, *args, **kwargs) -> DDR:
         if self.cutpoints is None:

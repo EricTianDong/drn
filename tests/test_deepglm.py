@@ -304,10 +304,19 @@ def test_different_batch_sizes():
 
 def test_network_construction():
     """Test that network is constructed properly with different layer configurations."""
-    # Test with 1 hidden layer
+    from drn.models.layers import ResidualBlock
+
+    # Test with 1 hidden layer: input projection only, no residual blocks
     m1 = DeepGLM(distribution='gamma', num_hidden_layers=1, hidden_size=8)
-    assert len([l for l in m1.hidden if isinstance(l, torch.nn.Linear)]) == 1
-    
-    # Test with 3 hidden layers
+    assert len([l for l in m1.hidden_layers if isinstance(l, torch.nn.Linear)]) == 1
+    assert len([l for l in m1.hidden_layers if isinstance(l, ResidualBlock)]) == 0
+
+    # Test with 3 hidden layers: input projection + one 2-layer residual block
     m3 = DeepGLM(distribution='gamma', num_hidden_layers=3, hidden_size=16)
-    assert len([l for l in m3.hidden if isinstance(l, torch.nn.Linear)]) == 3
+    assert len([l for l in m3.hidden_layers if isinstance(l, torch.nn.Linear)]) == 1
+    assert len([l for l in m3.hidden_layers if isinstance(l, ResidualBlock)]) == 1
+
+    # Test with 4 hidden layers: one residual block + one leftover plain layer
+    m4 = DeepGLM(distribution='gamma', num_hidden_layers=4, hidden_size=16)
+    assert len([l for l in m4.hidden_layers if isinstance(l, torch.nn.Linear)]) == 2
+    assert len([l for l in m4.hidden_layers if isinstance(l, ResidualBlock)]) == 1
