@@ -9,7 +9,7 @@ try:
 except ImportError:
     pass
 from .train import train
-from .metrics import crps, quantile_score, quantile_losses, rmse
+from .metrics import crps, nll, quantile_score, quantile_losses, rmse
 from .utils import (
     split_and_preprocess,
     split_data,
@@ -28,6 +28,7 @@ __all__ = [
     "compute_hidden_sizes",
     "count_params",
     "crps",
+    "nll",
     "preprocess_data",
     "replace_rare_categories",
     "rmse",

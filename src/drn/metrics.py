@@ -124,3 +124,17 @@ def rmse(y, y_hat):
     y = _to_tensor(y)
     # Calculate the RMSE
     return torch.sqrt(torch.mean((y.squeeze() - y_hat.squeeze()) ** 2))
+
+
+def nll(dists, y, alpha=0.0):
+    """
+    Compute the mean negative log-likelihood of observations under a distribution.
+
+    :param dists: A (batched) torch distribution exposing ``log_prob``.
+    :param y: Observed target values. Can be a Pandas Series/DataFrame, a NumPy
+        array, or a PyTorch tensor.
+    :return: The mean negative log-likelihood as a PyTorch tensor.
+    """
+    y = _to_tensor(y)
+    losses = -(dists.log_prob(y))
+    return torch.mean(losses)

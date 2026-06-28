@@ -5,7 +5,8 @@ import torch
 import torch.nn as nn
 
 from ..distributions.extended_histogram import ExtendedHistogram
-from .ddr import jbce_loss, nll_loss
+from ..metrics import nll
+from .ddr import jbce_loss
 from .base import BaseModel
 from .constant import Constant
 from .glm import GLM, _build_baseline
@@ -228,7 +229,7 @@ def drn_loss(
     if kind == "jbce":
         losses = jbce_loss(dists, y)
     else:
-        losses = nll_loss(dists, y)
+        losses = nll(dists, y)
 
     reg_loss = 0.0
     epsilon = 1e-30

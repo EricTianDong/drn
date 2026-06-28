@@ -28,6 +28,14 @@ Evaluation metrics for distributional regression models, including both traditio
       show_source: false
       heading_level: 3
 
+### NLL (Negative Log-Likelihood)
+
+::: drn.metrics.nll
+    options:
+      show_root_heading: true
+      show_source: false
+      heading_level: 3
+
 ## Point Prediction Metrics
 
 ### RMSE (Root Mean Squared Error)

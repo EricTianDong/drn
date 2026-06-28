@@ -30,7 +30,7 @@ Training framework and utilities for DRN models, including the main training loo
 
 ### NLL Loss
 
-::: drn.models.ddr.nll_loss
+::: drn.metrics.nll
     options:
       show_root_heading: true
       show_source: false

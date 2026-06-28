@@ -5,6 +5,7 @@ import torch
 import torch.nn as nn
 
 from ..distributions.histogram import Histogram
+from ..metrics import nll
 from .base import BaseModel
 from .layers import build_hidden_layers
 
@@ -101,7 +102,7 @@ class DDR(BaseModel):
         if self.loss_metric == "jbce":
             return jbce_loss(dists, y)
         else:
-            return nll_loss(dists, y)
+            return nll(dists, y)
 
 
 def jbce_loss(dists, y, alpha=0.0):
@@ -142,11 +143,6 @@ def ddr_loss(pred, y, alpha=0.0):
     cutpoints, prob_masses = pred
     dists = Histogram(cutpoints, prob_masses)
     return jbce_loss(dists, y, alpha)
-
-
-def nll_loss(dists, y, alpha=0.0):
-    losses = -(dists.log_prob(y))
-    return torch.mean(losses)
 
 
 def ddr_cutpoints(c_0: float, c_K: float, proportion: float, n: int) -> list[float]:
