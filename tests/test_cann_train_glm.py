@@ -33,6 +33,34 @@ def _preds(module, X_np, take_first=64):
         return module(X).detach().cpu().clone()
 
 
+@pytest.mark.parametrize("distribution", ["gamma", "gaussian"])
+def test_cann_initial_predictions_match_baseline_glm(distribution):
+    """A freshly initialised CANN must predict exactly like its baseline GLM.
+
+    The neural-network adjustment should start at zero so that, before any
+    training, the CANN reproduces the predictions of the GLM passed to its
+    constructor.
+    """
+    torch.manual_seed(0)
+    X, y = _rng_data(n=128, p=3, seed=0)
+
+    baseline = GLM(distribution).fit(X, y)
+
+    cann = CANN(
+        baseline=baseline,
+        hidden_size=8,
+        num_hidden_layers=2,
+        dropout_rate=0.1,
+    )
+
+    glm_preds = _preds(baseline, X)
+    cann_preds = _preds(cann, X)
+
+    assert torch.allclose(cann_preds, glm_preds, rtol=1e-6, atol=1e-6), (
+        "Initial CANN predictions differ from the baseline GLM predictions."
+    )
+
+
 def test_cann_train_glm_freezes_baseline_when_flag_false():
     """Baseline coefficients and predictions must stay unchanged when train_glm=False."""
     torch.manual_seed(7)

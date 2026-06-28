@@ -80,6 +80,12 @@ class CANN(BaseModel):
             [hidden_size] * num_hidden_layers, dropout_rate
         )
         self.nn_head = nn.Linear(hidden_size, 1)
+        # Zero-initialise the output layer so the network adjustment starts at
+        # zero. The freshly constructed CANN therefore reproduces the baseline
+        # GLM's predictions exactly, and gradient descent explores network
+        # features as improvements on top of the GLM's MLE.
+        nn.init.zeros_(self.nn_head.weight)
+        nn.init.zeros_(self.nn_head.bias)
 
         if self.distribution == "inversegaussian":
             self.loss_fn = inverse_gaussian_deviance_loss
