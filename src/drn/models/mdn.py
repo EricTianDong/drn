@@ -21,7 +21,7 @@ class MDN(BaseModel):
         num_hidden_layers=None,
         num_components=5,
         hidden_size: int | list[int] = 100,
-        dropout_rate=0.2,
+        dropout_rate=0.0,
         weight_decay=0.0,
         learning_rate=1e-3,
         sigma_alpha=0.0,

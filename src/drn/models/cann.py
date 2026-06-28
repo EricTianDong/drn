@@ -30,7 +30,7 @@ class CANN(BaseModel):
         baseline: GLM | Constant | None = None,
         num_hidden_layers=2,
         hidden_size=50,
-        dropout_rate=0.2,
+        dropout_rate=0.0,
         weight_decay=0.0,
         train_glm=False,
         learning_rate=1e-3,

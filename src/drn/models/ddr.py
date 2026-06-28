@@ -15,7 +15,7 @@ class DDR(BaseModel):
         cutpoints: list[float] | None = None,
         num_hidden_layers=2,
         hidden_size=100,
-        dropout_rate=0.2,
+        dropout_rate=0.0,
         weight_decay=0.0,
         proportion=0.1,
         loss_metric="jbce",

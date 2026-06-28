@@ -20,7 +20,7 @@ class DRN(BaseModel):
         ct=None,
         num_hidden_layers=None,
         hidden_size: int | list[int] = 75,
-        dropout_rate=0.2,
+        dropout_rate=0.0,
         weight_decay=0.0,
         baseline_start=False,
         proportion=0.1,

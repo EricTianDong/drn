@@ -34,7 +34,7 @@ class DeepGLM(BaseModel):
         distribution: str = "gamma",
         num_hidden_layers: int = 2,
         hidden_size: int = 128,
-        dropout_rate: float = 0.1,
+        dropout_rate: float = 0.0,
         weight_decay: float = 0.0,
         learning_rate: float = 1e-3,
         ct: object | None = None,
