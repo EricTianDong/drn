@@ -291,6 +291,18 @@ def _to_numpy(data):
         return np.asarray(data, dtype=np.float32)
 
 
+def _support_lower_bound(distribution) -> float | None:
+    """Return the lower bound of a distribution's support, or None if it is
+    unbounded below (e.g. a Gaussian) or unknown."""
+    try:
+        # `support` may be a property that raises (e.g. Histogram).
+        support = getattr(distribution, "support", None)
+        lower = getattr(support, "lower_bound", None)
+        return None if lower is None else float(lower)
+    except (NotImplementedError, TypeError, ValueError):
+        return None
+
+
 def binary_search_icdf(
     distribution: torch.distributions.Distribution, p: float, l=None, u=None, max_iter=1000, tolerance=1e-7
 ) -> torch.Tensor:
@@ -331,13 +343,28 @@ def binary_search_icdf(
         (1, num_observations), fill_value=p, dtype=torch.float32
     )
 
+    # Lower bound of the distribution's support (histogram-like distributions
+    # inherit their support from the spliced baseline). The search must never go
+    # below it, or the baseline cdf gets evaluated outside its support and raises.
+    support_lower = _support_lower_bound(
+        getattr(distribution, "baseline", distribution)
+    )
+
     # Initialize bounds with distribution-aware defaults
     if l is None:
         if hasattr(distribution, "cutpoints"):
-            # For histogram-like distributions
+            # For histogram-like distributions, extend below the lowest cutpoint
+            # to capture the baseline's left tail...
             l = distribution.cutpoints[0] - (
                 distribution.cutpoints[-1] - distribution.cutpoints[0]
             )
+            # ...but never below the baseline's support. A Gamma baseline is only
+            # defined on [0, inf), and cutpoints[0] can be 0.0, which makes this
+            # extension negative and raises when the baseline cdf is evaluated.
+            if support_lower is not None:
+                l = torch.clamp(
+                    torch.as_tensor(l, dtype=torch.float32), min=support_lower
+                )
         else:
             # Try to get reasonable bounds from the distribution
             try:
@@ -405,6 +432,10 @@ def binary_search_icdf(
     except:
         # If CDF evaluation fails, stick with original bounds
         pass
+
+    # Keep the (possibly expanded) lower bound within the distribution's support.
+    if support_lower is not None:
+        l = torch.clamp(torch.as_tensor(l, dtype=torch.float32), min=support_lower)
 
     # Ensure l and u are tensors
     l = torch.tensor(l) if not isinstance(l, torch.Tensor) else l
