@@ -90,6 +90,43 @@ def test_ddr():
     check_crps(ddr, X_train, Y_train)
 
 
+def test_drn_crps_loss():
+    print("\n\nTraining DRN with CRPS loss\n")
+    from drn.models.drn import drn_loss, default_drn_cutpoints
+
+    X_train, Y_train, train_dataset, val_dataset = generate_synthetic_tensordataset()
+
+    torch.manual_seed(7)
+    glm = GLM("gamma")
+    train(glm, train_dataset, val_dataset, epochs=1)
+    glm.update_dispersion(X_train, Y_train)
+
+    cutpoints = default_drn_cutpoints(Y_train)
+    drn = DRN(glm, cutpoints, hidden_size=50, loss_metric="crps")
+
+    # A single manual step lets us inspect gradients. Backpropagating CRPS
+    # through a Gamma baseline would raise "igamma: input not implemented" if
+    # the (frozen) baseline were being differentiated -- it must not be.
+    drn.train()
+    loss = drn_loss(drn(X_train[:64]), Y_train[:64], kind="crps")
+    loss.backward()
+
+    assert torch.isfinite(loss) and loss.item() > 0
+    # Frozen baseline receives no gradient...
+    for p in drn.glm.parameters():
+        assert p.requires_grad is False
+        assert p.grad is None
+    # ...while the DRN head does.
+    assert drn.fc_output.weight.grad is not None
+    assert drn.fc_output.weight.grad.abs().sum() > 0
+
+    # A full short training run must also complete without the igamma error.
+    torch.manual_seed(7)
+    drn2 = DRN(glm, cutpoints, hidden_size=50, loss_metric="crps")
+    train(drn2, train_dataset, val_dataset, epochs=2)
+    check_crps(drn2, X_train, Y_train)
+
+
 def test_drn():
     print("\n\nTraining DRN\n")
     X_train, Y_train, train_dataset, val_dataset = generate_synthetic_tensordataset()

@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 
 from ..distributions.extended_histogram import ExtendedHistogram
-from ..metrics import nll
+from ..metrics import crps_extended_histogram, nll
 from .ddr import jbce_loss
 from .base import BaseModel
 from .constant import Constant
@@ -228,6 +228,11 @@ def drn_loss(
 
     if kind == "jbce":
         losses = jbce_loss(dists, y)
+    elif kind == "crps":
+        # Closed-form CRPS (exact histogram body + analytic baseline tails for
+        # Gamma/Normal). Gradients flow only through drn_pmf; the baseline is
+        # frozen, so no derivative is taken through its (Gamma) CDF.
+        losses = crps_extended_histogram(dists, y).mean()
     else:
         losses = nll(dists, y)
 

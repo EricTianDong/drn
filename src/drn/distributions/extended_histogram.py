@@ -287,6 +287,17 @@ class ExtendedHistogram(Distribution):
         # Var(Y) = E[Y^2] - (E[Y])^2
         return EY2 - EY**2
 
+    def crps(self, obs) -> torch.Tensor:
+        """Semi-closed-form CRPS at ``obs`` (one value per batch element).
+
+        The histogram body is integrated exactly and the tails are reduced to
+        one-dimensional baseline integrals. See
+        ``docs/crps_extended_histogram.tex`` for the derivation.
+        """
+        from ..metrics import crps_extended_histogram
+
+        return crps_extended_histogram(self, obs)
+
     def icdf(self, p, l=None, u=None, max_iter=1000, tolerance=1e-7) -> torch.Tensor:
         """
         Calculate the inverse CDF (quantiles) using shared binary search implementation.
